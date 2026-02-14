@@ -16,12 +16,15 @@ datasource db {
 // ============================================================================
 
 model User {
-  id       String @id @default(cuid())
-  email    String @unique
-  nickname String @unique
-  profile  String @default("") // Profile image URL
-  oauthId  Int? // OAuth provider ID
-  roleId   Int    @default(2) // 1=admin, 2=user
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  nickname      String?   @unique
+  profile       String    @default("") // Profile image URL
+  oauthId       Int? // OAuth provider ID
+  roleId        Int       @default(2) // 1=admin, 2=user
 
   // Audit fields
   createdAt  DateTime  @default(now()) @map("created_at")
@@ -289,4 +292,36 @@ model VerificationToken {
 
   @@unique([identifier, token])
   @@map("verification_tokens")
+}
+
+// ============================================================================
+// Content Pages (Resume, Portfolio)
+// ============================================================================
+
+model Resume {
+  id          Int     @id @default(autoincrement())
+  content     String  @db.Text
+  isPublished Boolean @default(false) @map("is_published")
+
+  // Audit fields
+  createdAt  DateTime @default(now()) @map("created_at")
+  createUser String   @default("system") @map("create_user")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  updateUser String   @default("system") @map("update_user")
+
+  @@map("resumes")
+}
+
+model Portfolio {
+  id          Int     @id @default(autoincrement())
+  content     String  @db.Text
+  isPublished Boolean @default(false) @map("is_published")
+
+  // Audit fields
+  createdAt  DateTime @default(now()) @map("created_at")
+  createUser String   @default("system") @map("create_user")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  updateUser String   @default("system") @map("update_user")
+
+  @@map("portfolios")
 }

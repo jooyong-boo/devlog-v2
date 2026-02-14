@@ -4,11 +4,11 @@ export const siteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
   author: {
     name: 'Jooyong',
-    email: 'jooyong@example.com',
-    github: 'https://github.com/yourusername',
+    email: 'qnwndydfe@gmail.com',
+    github: 'https://github.com/jooyong-boo',
   },
   links: {
-    github: 'https://github.com/yourusername',
+    github: 'https://github.com/jooyong-boo',
   },
 } as const;
 
