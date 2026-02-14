@@ -1,0 +1,27 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build outputs
+.next
+out
+build
+dist
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env*.local
+
+# Misc
+.DS_Store
+*.pem
+
+# Storybook
+storybook-static
+
+# Coverage
+coverage
