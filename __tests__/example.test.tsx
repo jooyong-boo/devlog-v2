@@ -1,13 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import Home from '@/app/page';
+import { Button } from '@/shared/ui/button';
 
-describe('Home', () => {
-  it('renders the main heading', () => {
-    render(<Home />);
-    const heading = screen.getByRole('heading', {
-      name: /Welcome to Jooyong DevLog/i,
-    });
-    expect(heading).toBeInTheDocument();
+describe('Example Test - Button Component', () => {
+  it('renders a button with text', () => {
+    render(<Button>Click me</Button>);
+    const button = screen.getByRole('button', { name: /click me/i });
+    expect(button).toBeInTheDocument();
+  });
+
+  it('handles click events', () => {
+    const handleClick = vi.fn();
+    render(<Button onClick={handleClick}>Click me</Button>);
+    const button = screen.getByRole('button');
+    button.click();
+    expect(handleClick).toHaveBeenCalledOnce();
   });
 });
