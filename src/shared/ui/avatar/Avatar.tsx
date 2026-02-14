@@ -1,6 +1,8 @@
-import React from 'react';
+'use client';
+
 import { cn } from '@/shared/lib/utils';
 import Image from 'next/image';
+import { useState } from 'react';
 
 export interface AvatarProps {
   src?: string;
@@ -17,12 +19,18 @@ export const Avatar: React.FC<AvatarProps> = ({
   fallback,
   className,
 }) => {
-  const [imageError, setImageError] = React.useState(false);
+  const [imageError, setImageError] = useState(false);
 
   const sizeClasses = {
     sm: 'w-8 h-8 text-xs',
     md: 'w-10 h-10 text-sm',
     lg: 'w-12 h-12 text-base',
+  };
+
+  const imageSizes = {
+    sm: '32px',
+    md: '40px',
+    lg: '48px',
   };
 
   const showFallback = !src || imageError;
@@ -46,6 +54,7 @@ export const Avatar: React.FC<AvatarProps> = ({
           src={src}
           alt={alt}
           fill
+          sizes={imageSizes[size]}
           className="object-cover"
           onError={() => setImageError(true)}
         />
