@@ -40,7 +40,7 @@ pnpm prisma:studio    # Prisma 시각적 편집기
 - **스타일링**: Tailwind CSS v4 (CSS-first 설정, `app/globals.css`에서 관리. `tailwind.config.js` 없음)
 - **DB**: Prisma ORM + Supabase PostgreSQL. 스키마: `prisma/schema.prisma`. 모든 엔티티에 감사 필드 포함 (`createdAt`, `createUser`, `updatedAt`, `updateUser`, `deletedAt`, `deleteUser`).
 - **인증**: NextAuth.js v5 beta, Google/GitHub OAuth. 설정: `auth.ts`, `auth.config.ts`. JWT 세션 + Prisma 어댑터. 역할 기반 접근 제어 (admin/user).
-- **미들웨어**: `middleware.ts`에서 `/admin/*` 라우트 보호.
+- **프록시**: `proxy.ts`에서 `/admin/*` 라우트 보호 (Next.js 16부터 `middleware.ts` → `proxy.ts`, export 함수명 `middleware` → `proxy`로 변경됨).
 - **폼**: react-hook-form + Zod 유효성 검증. 스키마 위치: `features/*/model/schema.ts`.
 - **에디터**: Tiptap 리치 텍스트 에디터 + lowlight 코드 구문 강조.
 - **상태 관리**: Zustand (클라이언트 상태), nuqs (URL 검색 파라미터).
