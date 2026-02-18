@@ -1,0 +1,73 @@
+'use server';
+
+import { auth } from '@/shared/lib/auth';
+import { prisma } from '@/shared/lib/prisma';
+import { revalidatePath } from 'next/cache';
+
+export async function createComment(
+  postId: string,
+  content: string,
+  parentId?: number
+) {
+  const session = await auth();
+
+  if (!session) {
+    return { success: false, error: 'Unauthorized' };
+  }
+
+  try {
+    const comment = await prisma.comment.create({
+      data: {
+        postId,
+        userId: session.user.id,
+        content,
+        parentId,
+        createUser: session.user.id,
+        updateUser: session.user.id,
+      },
+      include: {
+        user: {
+          select: { id: true, nickname: true, profile: true },
+        },
+      },
+    });
+
+    revalidatePath(`/posts/${postId}`);
+
+    return { success: true, comment };
+  } catch {
+    return { success: false, error: 'Failed to create comment' };
+  }
+}
+
+export async function deleteComment(commentId: number, postId: string) {
+  const session = await auth();
+
+  if (!session) {
+    return { success: false, error: 'Unauthorized' };
+  }
+
+  try {
+    const comment = await prisma.comment.findUnique({
+      where: { id: commentId },
+    });
+
+    if (!comment || comment.userId !== session.user.id) {
+      return { success: false, error: 'Forbidden' };
+    }
+
+    await prisma.comment.update({
+      where: { id: commentId },
+      data: {
+        deletedAt: new Date(),
+        deleteUser: session.user.id,
+      },
+    });
+
+    revalidatePath(`/posts/${postId}`);
+
+    return { success: true };
+  } catch {
+    return { success: false, error: 'Failed to delete comment' };
+  }
+}
