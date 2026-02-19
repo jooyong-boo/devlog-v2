@@ -18,6 +18,9 @@ export default function AdminSeriesPage() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [loading, setLoading] = useState(true);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editTitle, setEditTitle] = useState('');
+  const [editDescription, setEditDescription] = useState('');
 
   const fetchSeries = async () => {
     const res = await fetch('/api/admin/series');
@@ -59,6 +62,36 @@ export default function AdminSeriesPage() {
     if (res.ok) fetchSeries();
   };
 
+  const startEdit = (series: Series) => {
+    setEditingId(series.id);
+    setEditTitle(series.title);
+    setEditDescription(series.description || '');
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditTitle('');
+    setEditDescription('');
+  };
+
+  const handleUpdate = async (id: number) => {
+    if (!editTitle.trim()) return;
+
+    const res = await fetch(`/api/admin/series/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: editTitle.trim(),
+        description: editDescription.trim(),
+      }),
+    });
+
+    if (res.ok) {
+      setEditingId(null);
+      fetchSeries();
+    }
+  };
+
   return (
     <div className="max-w-2xl">
       <h1 className="text-3xl font-bold mb-8">시리즈 관리</h1>
@@ -91,26 +124,58 @@ export default function AdminSeriesPage() {
         <div className="space-y-3">
           {seriesList.map((series) => (
             <Card key={series.id} variant="bordered" padding="md">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-semibold">{series.title}</h3>
-                  {series.description && (
-                    <p className="text-sm text-gray-500">
-                      {series.description}
-                    </p>
-                  )}
-                  <p className="text-xs text-gray-400 mt-1">
-                    {series._count.posts}개의 글
-                  </p>
+              {editingId === series.id ? (
+                <div className="space-y-3">
+                  <Input
+                    label="시리즈 제목"
+                    value={editTitle}
+                    onChange={(e) => setEditTitle(e.target.value)}
+                  />
+                  <Input
+                    label="설명"
+                    value={editDescription}
+                    onChange={(e) => setEditDescription(e.target.value)}
+                  />
+                  <div className="flex gap-2">
+                    <Button size="sm" onClick={() => handleUpdate(series.id)}>
+                      저장
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={cancelEdit}>
+                      취소
+                    </Button>
+                  </div>
                 </div>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => handleDelete(series.id)}
-                >
-                  삭제
-                </Button>
-              </div>
+              ) : (
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-semibold">{series.title}</h3>
+                    {series.description && (
+                      <p className="text-sm text-gray-500">
+                        {series.description}
+                      </p>
+                    )}
+                    <p className="text-xs text-gray-400 mt-1">
+                      {series._count.posts}개의 글
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => startEdit(series)}
+                    >
+                      수정
+                    </Button>
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      onClick={() => handleDelete(series.id)}
+                    >
+                      삭제
+                    </Button>
+                  </div>
+                </div>
+              )}
             </Card>
           ))}
         </div>

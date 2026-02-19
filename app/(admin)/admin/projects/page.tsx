@@ -18,6 +18,9 @@ export default function AdminProjectsPage() {
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
   const [loading, setLoading] = useState(true);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editName, setEditName] = useState('');
+  const [editDesc, setEditDesc] = useState('');
 
   const fetchProjects = async () => {
     const res = await fetch('/api/admin/projects');
@@ -56,6 +59,33 @@ export default function AdminProjectsPage() {
     if (res.ok) fetchProjects();
   };
 
+  const startEdit = (project: Project) => {
+    setEditingId(project.id);
+    setEditName(project.name);
+    setEditDesc(project.desc);
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditName('');
+    setEditDesc('');
+  };
+
+  const handleUpdate = async (id: number) => {
+    if (!editName.trim()) return;
+
+    const res = await fetch(`/api/admin/projects/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: editName.trim(), desc: editDesc.trim() }),
+    });
+
+    if (res.ok) {
+      setEditingId(null);
+      fetchProjects();
+    }
+  };
+
   return (
     <div className="max-w-2xl">
       <h1 className="text-3xl font-bold mb-8">프로젝트 관리</h1>
@@ -89,22 +119,54 @@ export default function AdminProjectsPage() {
         <div className="space-y-3">
           {projects.map((project) => (
             <Card key={project.id} variant="bordered" padding="md">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-semibold">{project.name}</h3>
-                  <p className="text-sm text-gray-500">{project.desc}</p>
-                  <p className="text-xs text-gray-400 mt-1">
-                    {project._count.posts}개의 글
-                  </p>
+              {editingId === project.id ? (
+                <div className="space-y-3">
+                  <Input
+                    label="프로젝트 이름"
+                    value={editName}
+                    onChange={(e) => setEditName(e.target.value)}
+                  />
+                  <Input
+                    label="설명"
+                    value={editDesc}
+                    onChange={(e) => setEditDesc(e.target.value)}
+                  />
+                  <div className="flex gap-2">
+                    <Button size="sm" onClick={() => handleUpdate(project.id)}>
+                      저장
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={cancelEdit}>
+                      취소
+                    </Button>
+                  </div>
                 </div>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => handleDelete(project.id)}
-                >
-                  삭제
-                </Button>
-              </div>
+              ) : (
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="font-semibold">{project.name}</h3>
+                    <p className="text-sm text-gray-500">{project.desc}</p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {project._count.posts}개의 글
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => startEdit(project)}
+                    >
+                      수정
+                    </Button>
+                    <Button
+                      variant="danger"
+                      size="sm"
+                      onClick={() => handleDelete(project.id)}
+                    >
+                      삭제
+                    </Button>
+                  </div>
+                </div>
+              )}
             </Card>
           ))}
         </div>

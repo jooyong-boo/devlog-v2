@@ -4,6 +4,7 @@ import { Button } from '@/shared/ui/button';
 import { Card } from '@/shared/ui/card';
 import { formatDate } from '@/shared/lib/date';
 import Link from 'next/link';
+import { PostActions } from './PostActions';
 
 export default async function AdminPostsPage() {
   const posts = await prisma.post.findMany({
@@ -33,6 +34,7 @@ export default async function AdminPostsPage() {
               <th className="px-4 py-3 font-medium">상태</th>
               <th className="px-4 py-3 font-medium">조회수</th>
               <th className="px-4 py-3 font-medium">작성일</th>
+              <th className="px-4 py-3 font-medium">관리</th>
             </tr>
           </thead>
           <tbody>
@@ -70,11 +72,14 @@ export default async function AdminPostsPage() {
                 <td className="px-4 py-3 text-sm text-gray-500">
                   {formatDate(post.createdAt)}
                 </td>
+                <td className="px-4 py-3">
+                  <PostActions postId={post.id} />
+                </td>
               </tr>
             ))}
             {posts.length === 0 && (
               <tr>
-                <td colSpan={5} className="px-4 py-8 text-center text-gray-500">
+                <td colSpan={6} className="px-4 py-8 text-center text-gray-500">
                   아직 게시글이 없습니다
                 </td>
               </tr>
