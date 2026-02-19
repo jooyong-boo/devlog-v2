@@ -32,7 +32,7 @@
 
 ### 1. `features/comment/delete/` — 신규 생성
 
-```
+```text
 features/comment/delete/
 ├── api/
 │   └── actions.ts       # deleteComment 서버 액션
@@ -44,7 +44,7 @@ features/comment/delete/
 
 ### 2. `entities/comment/ui/` — 기존 수정
 
-- `CommentItem.tsx`: 삭제 버튼 조건부 렌더링 추가
+- `CommentCard.tsx`: 삭제 버튼 조건부 렌더링 추가
   - 조건: `session.user.id === comment.userId` OR `session.user.role === 'admin'`
 - 삭제된 댓글(`deletedAt !== null`) 표시 방식:
   - 대댓글 있음 → `"삭제된 댓글입니다."` 회색 텍스트, 작성자/시간 숨김
@@ -67,10 +67,11 @@ async function deleteComment(commentId: number): Promise<ActionResult>;
 // 처리 순서
 // 1. 세션 확인 → 미로그인 시 에러 반환
 // 2. DB에서 댓글 조회 → 없으면 에러
-// 3. 권한 확인: comment.userId === session.user.id OR role === 'admin'
-// 4. soft delete: deletedAt = now(), deleteUser = session.user.id
-// 5. revalidateTag('comments')
-// 6. 성공/실패 결과 반환
+// 3. 이미 삭제된 댓글이면 no-op 반환
+// 4. 권한 확인: comment.userId === session.user.id OR role === 'admin'
+// 5. soft delete: deletedAt = now(), deleteUser = session.user.id
+// 6. revalidatePath(`/posts/${comment.postId}`)
+// 7. 성공/실패 결과 반환
 
 // 반환 타입
 type ActionResult = { success: true } | { success: false; error: string };
@@ -89,7 +90,7 @@ type ActionResult = { success: true } | { success: false; error: string };
 3. 성공 → 목록 자동 갱신 (서버 컴포넌트 revalidation)
 4. 실패 → 토스트 에러 메시지 표시
 
-**버튼 위치:** 댓글 카드 우측 상단, 본인 댓글에만 표시
+**버튼 위치:** 댓글 내용 하단 액션 행, 본인 댓글에만 표시
 
 ---
 
@@ -98,9 +99,9 @@ type ActionResult = { success: true } | { success: false; error: string };
 - [ ] `deleteComment` 서버 액션 작성 및 권한 검증 포함
 - [ ] Zod 스키마 작성
 - [ ] `DeleteCommentButton` 컴포넌트 작성
-- [ ] `CommentItem`에 삭제 버튼 조건부 렌더링
+- [ ] `CommentCard`에 삭제 버튼 조건부 렌더링
 - [ ] 삭제된 댓글 표시 로직 (대댓글 유무 분기)
-- [ ] revalidateTag 적용 확인
+- [ ] revalidatePath 적용 확인
 - [ ] admin 권한으로 타인 댓글 삭제 동작 확인
 
 ---

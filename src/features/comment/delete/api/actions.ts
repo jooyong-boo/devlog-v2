@@ -6,10 +6,7 @@ import { revalidatePath } from 'next/cache';
 
 type ActionResult = { success: true } | { success: false; error: string };
 
-export async function deleteComment(
-  commentId: number,
-  postId: string
-): Promise<ActionResult> {
+export async function deleteComment(commentId: number): Promise<ActionResult> {
   const session = await auth();
 
   if (!session) {
@@ -23,6 +20,10 @@ export async function deleteComment(
 
     if (!comment) {
       return { success: false, error: '댓글을 찾을 수 없습니다.' };
+    }
+
+    if (comment.deletedAt) {
+      return { success: false, error: '이미 삭제된 댓글입니다.' };
     }
 
     const isOwner = comment.userId === session.user.id;
@@ -40,7 +41,7 @@ export async function deleteComment(
       },
     });
 
-    revalidatePath(`/posts/${postId}`);
+    revalidatePath(`/posts/${comment.postId}`);
 
     return { success: true };
   } catch {

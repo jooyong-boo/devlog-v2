@@ -6,13 +6,9 @@ import { deleteComment } from '../api/actions';
 
 interface DeleteCommentButtonProps {
   commentId: number;
-  postId: string;
 }
 
-export function DeleteCommentButton({
-  commentId,
-  postId,
-}: DeleteCommentButtonProps) {
+export function DeleteCommentButton({ commentId }: DeleteCommentButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async () => {
@@ -20,7 +16,7 @@ export function DeleteCommentButton({
 
     setIsLoading(true);
     try {
-      const result = await deleteComment(commentId, postId);
+      const result = await deleteComment(commentId);
       if (!result.success) {
         alert(result.error);
       }

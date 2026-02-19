@@ -3,8 +3,7 @@
 import { Avatar } from '@/shared/ui/avatar';
 import { Button } from '@/shared/ui/button';
 import { formatDate } from '@/shared/lib/date';
-import { useState } from 'react';
-import { DeleteCommentButton } from '@/features/comment/delete/ui/DeleteCommentButton';
+import { useState, type ReactNode } from 'react';
 
 interface CommentCardProps {
   comment: {
@@ -29,19 +28,19 @@ interface CommentCardProps {
       };
     }>;
   };
-  postId: string;
   currentUserId?: string;
   isAdmin?: boolean;
   onReply?: (commentId: number) => void;
+  deleteSlot?: (commentId: number) => ReactNode;
   depth?: number;
 }
 
 export function CommentCard({
   comment,
-  postId,
   currentUserId,
   isAdmin,
   onReply,
+  deleteSlot,
   depth = 0,
 }: CommentCardProps) {
   const [showReplies] = useState(true);
@@ -106,9 +105,7 @@ export function CommentCard({
                   </Button>
                 )}
 
-                {canDelete && (
-                  <DeleteCommentButton commentId={comment.id} postId={postId} />
-                )}
+                {canDelete && deleteSlot?.(comment.id)}
               </div>
             </div>
           </>
@@ -121,10 +118,10 @@ export function CommentCard({
             <CommentCard
               key={reply.id}
               comment={reply}
-              postId={postId}
               currentUserId={currentUserId}
               isAdmin={isAdmin}
               onReply={onReply}
+              deleteSlot={deleteSlot}
               depth={depth + 1}
             />
           ))}

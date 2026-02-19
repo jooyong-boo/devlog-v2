@@ -2,12 +2,6 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { CommentCard } from '../CommentCard';
 
-vi.mock('@/features/comment/delete/ui/DeleteCommentButton', () => ({
-  DeleteCommentButton: ({ commentId }: { commentId: number }) => (
-    <button data-testid={`delete-${commentId}`}>삭제</button>
-  ),
-}));
-
 const mockComment = {
   id: 1,
   content: 'This is a test comment',
@@ -20,22 +14,24 @@ const mockComment = {
   replies: [],
 };
 
-const POST_ID = 'post-abc';
+const deleteSlot = (commentId: number) => (
+  <button data-testid={`delete-${commentId}`}>삭제</button>
+);
 
 describe('<CommentCard />', () => {
   describe('렌더링', () => {
     it('댓글 내용을 표시해야 한다', () => {
-      render(<CommentCard comment={mockComment} postId={POST_ID} />);
+      render(<CommentCard comment={mockComment} />);
       expect(screen.getByText('This is a test comment')).toBeInTheDocument();
     });
 
     it('작성자 닉네임을 표시해야 한다', () => {
-      render(<CommentCard comment={mockComment} postId={POST_ID} />);
+      render(<CommentCard comment={mockComment} />);
       expect(screen.getByText('Commenter')).toBeInTheDocument();
     });
 
     it('작성일을 표시해야 한다', () => {
-      render(<CommentCard comment={mockComment} postId={POST_ID} />);
+      render(<CommentCard comment={mockComment} />);
       expect(screen.getByText(/2024/)).toBeInTheDocument();
     });
   });
@@ -47,9 +43,7 @@ describe('<CommentCard />', () => {
         deletedAt: new Date(),
         replies: [],
       };
-      const { container } = render(
-        <CommentCard comment={deletedComment} postId={POST_ID} />
-      );
+      const { container } = render(<CommentCard comment={deletedComment} />);
       expect(container.firstChild).toBeNull();
     });
 
@@ -66,9 +60,7 @@ describe('<CommentCard />', () => {
           },
         ],
       };
-      render(
-        <CommentCard comment={deletedCommentWithReplies} postId={POST_ID} />
-      );
+      render(<CommentCard comment={deletedCommentWithReplies} />);
       expect(screen.getByText('삭제된 댓글입니다.')).toBeInTheDocument();
       expect(
         screen.queryByText('This is a test comment')
@@ -90,34 +82,20 @@ describe('<CommentCard />', () => {
         ],
       };
 
-      render(<CommentCard comment={commentWithReplies} postId={POST_ID} />);
+      render(<CommentCard comment={commentWithReplies} />);
       expect(screen.getByText('Reply comment')).toBeInTheDocument();
       expect(screen.getByText('Replier')).toBeInTheDocument();
     });
 
     it('depth 3 미만에서 답글 버튼을 표시해야 한다', () => {
       const onReply = vi.fn();
-      render(
-        <CommentCard
-          comment={mockComment}
-          postId={POST_ID}
-          onReply={onReply}
-          depth={2}
-        />
-      );
+      render(<CommentCard comment={mockComment} onReply={onReply} depth={2} />);
       expect(screen.getByText('답글')).toBeInTheDocument();
     });
 
     it('depth 3 이상에서는 답글 버튼을 숨겨야 한다', () => {
       const onReply = vi.fn();
-      render(
-        <CommentCard
-          comment={mockComment}
-          postId={POST_ID}
-          onReply={onReply}
-          depth={3}
-        />
-      );
+      render(<CommentCard comment={mockComment} onReply={onReply} depth={3} />);
       expect(screen.queryByText('답글')).not.toBeInTheDocument();
     });
   });
@@ -127,8 +105,8 @@ describe('<CommentCard />', () => {
       render(
         <CommentCard
           comment={mockComment}
-          postId={POST_ID}
           currentUserId="user-1"
+          deleteSlot={deleteSlot}
         />
       );
       expect(screen.getByText('삭제')).toBeInTheDocument();
@@ -138,8 +116,8 @@ describe('<CommentCard />', () => {
       render(
         <CommentCard
           comment={mockComment}
-          postId={POST_ID}
           currentUserId="user-other"
+          deleteSlot={deleteSlot}
         />
       );
       expect(screen.queryByText('삭제')).not.toBeInTheDocument();
@@ -149,9 +127,9 @@ describe('<CommentCard />', () => {
       render(
         <CommentCard
           comment={mockComment}
-          postId={POST_ID}
           currentUserId="admin-user"
           isAdmin
+          deleteSlot={deleteSlot}
         />
       );
       expect(screen.getByText('삭제')).toBeInTheDocument();
@@ -159,9 +137,7 @@ describe('<CommentCard />', () => {
 
     it('답글 버튼 클릭 시 onReply가 호출되어야 한다', () => {
       const onReply = vi.fn();
-      render(
-        <CommentCard comment={mockComment} postId={POST_ID} onReply={onReply} />
-      );
+      render(<CommentCard comment={mockComment} onReply={onReply} />);
 
       fireEvent.click(screen.getByText('답글'));
       expect(onReply).toHaveBeenCalledWith(mockComment.id);
