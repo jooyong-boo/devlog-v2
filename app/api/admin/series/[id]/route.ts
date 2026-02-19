@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { auth } from '../../../../../auth';
 import { prisma } from '@/shared/lib/prisma';
 
@@ -20,6 +21,8 @@ export async function DELETE(
       deleteUser: session.user.id,
     },
   });
+
+  revalidateTag('posts', 'max');
 
   return NextResponse.json({ success: true });
 }

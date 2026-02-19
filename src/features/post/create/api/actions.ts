@@ -2,7 +2,7 @@
 
 import { auth } from '@/shared/lib/auth';
 import { prisma } from '@/shared/lib/prisma';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 import { z } from 'zod';
 import { createPostServerSchema } from '../model/schema';
 
@@ -80,6 +80,7 @@ export async function createPost(formData: FormData) {
 
     revalidatePath('/');
     revalidatePath('/admin/posts');
+    revalidateTag('posts', 'max');
 
     return { success: true, postId: post.id };
   } catch (error) {
