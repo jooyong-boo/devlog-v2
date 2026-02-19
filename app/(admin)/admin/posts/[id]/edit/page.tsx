@@ -1,8 +1,9 @@
+import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { prisma } from '@/shared/lib/prisma';
 import { PostCreateForm } from '@/features/post/create/ui/PostCreateForm';
 
-export default async function EditPostPage({
+async function EditPostContent({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -43,15 +44,31 @@ export default async function EditPostPage({
   };
 
   return (
+    <PostCreateForm
+      projects={projects}
+      series={series}
+      mode="edit"
+      initialData={initialData}
+      postId={post.id}
+    />
+  );
+}
+
+export default function EditPostPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  return (
     <div className="max-w-4xl">
       <h1 className="text-3xl font-bold mb-8">게시글 수정</h1>
-      <PostCreateForm
-        projects={projects}
-        series={series}
-        mode="edit"
-        initialData={initialData}
-        postId={post.id}
-      />
+      <Suspense
+        fallback={
+          <div className="h-96 animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg" />
+        }
+      >
+        <EditPostContent params={params} />
+      </Suspense>
     </div>
   );
 }

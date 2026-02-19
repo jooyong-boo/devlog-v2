@@ -1,3 +1,5 @@
+'use client';
+
 import { Github } from 'lucide-react';
 import { siteConfig } from '@/shared/config/site';
 

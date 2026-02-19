@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { prisma } from '@/shared/lib/prisma';
 import { PostCard } from '@/entities/post/ui/PostCard';
@@ -46,9 +47,11 @@ async function getSeriesWithPosts(id: number) {
   };
 }
 
-export default async function SeriesDetailPage({
+async function SeriesDetailContent({
   params,
-}: SeriesDetailPageProps) {
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
   const seriesId = parseInt(id);
 
@@ -85,6 +88,20 @@ export default async function SeriesDetailPage({
         ))}
       </div>
     </div>
+  );
+}
+
+export default function SeriesDetailPage({ params }: SeriesDetailPageProps) {
+  return (
+    <Suspense
+      fallback={
+        <div className="container mx-auto px-4 py-8">
+          <div className="h-96 animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg" />
+        </div>
+      }
+    >
+      <SeriesDetailContent params={params} />
+    </Suspense>
   );
 }
 
