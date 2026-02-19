@@ -59,6 +59,10 @@ export function PostCreateForm({
       if (formValues.tags) formData.set('tags', formValues.tags);
       formData.set('status', formValues.status);
 
+      if (mode === 'edit' && !postId) {
+        throw new Error('PostCreateForm: edit mode requires postId');
+      }
+
       const result =
         mode === 'edit' && postId
           ? await updatePost(postId, formData)

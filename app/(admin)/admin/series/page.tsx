@@ -77,18 +77,27 @@ export default function AdminSeriesPage() {
   const handleUpdate = async (id: number) => {
     if (!editTitle.trim()) return;
 
-    const res = await fetch(`/api/admin/series/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: editTitle.trim(),
-        description: editDescription.trim(),
-      }),
-    });
+    try {
+      const res = await fetch(`/api/admin/series/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: editTitle.trim(),
+          description: editDescription.trim(),
+        }),
+      });
 
-    if (res.ok) {
+      if (!res.ok) {
+        const errorBody = await res.json().catch(() => null);
+        const message = errorBody?.error ?? `${res.status} ${res.statusText}`;
+        alert(`시리즈 수정 실패: ${message}`);
+        return;
+      }
+
       setEditingId(null);
       fetchSeries();
+    } catch {
+      alert('시리즈 수정 중 네트워크 오류가 발생했습니다.');
     }
   };
 

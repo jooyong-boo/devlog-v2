@@ -74,15 +74,24 @@ export default function AdminProjectsPage() {
   const handleUpdate = async (id: number) => {
     if (!editName.trim()) return;
 
-    const res = await fetch(`/api/admin/projects/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: editName.trim(), desc: editDesc.trim() }),
-    });
+    try {
+      const res = await fetch(`/api/admin/projects/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: editName.trim(), desc: editDesc.trim() }),
+      });
 
-    if (res.ok) {
+      if (!res.ok) {
+        const errorBody = await res.json().catch(() => null);
+        const message = errorBody?.error ?? `${res.status} ${res.statusText}`;
+        alert(`프로젝트 수정 실패: ${message}`);
+        return;
+      }
+
       setEditingId(null);
       fetchProjects();
+    } catch {
+      alert('프로젝트 수정 중 네트워크 오류가 발생했습니다.');
     }
   };
 

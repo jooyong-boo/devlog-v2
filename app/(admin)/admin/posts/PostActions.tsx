@@ -15,11 +15,15 @@ export function PostActions({ postId }: PostActionsProps) {
   const handleDelete = async () => {
     if (!confirm('정말 삭제하시겠습니까?')) return;
 
-    const result = await deletePost(postId);
-    if (result.success) {
-      router.refresh();
-    } else {
-      alert(result.error);
+    try {
+      const result = await deletePost(postId);
+      if (result.success) {
+        router.refresh();
+      } else {
+        alert(result.error);
+      }
+    } catch {
+      alert('게시글 삭제 중 네트워크 오류가 발생했습니다.');
     }
   };
 
