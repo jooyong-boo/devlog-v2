@@ -1,7 +1,5 @@
 import { getPublishedResume } from '@/entities/resume/api/queries';
 
-export const dynamic = 'force-dynamic';
-
 export default async function ResumePage() {
   const resume = await getPublishedResume();
 

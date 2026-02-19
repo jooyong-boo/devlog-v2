@@ -4,8 +4,6 @@ import { Card } from '@/shared/ui/card';
 import { Badge } from '@/shared/ui/badge';
 import Link from 'next/link';
 
-export const dynamic = 'force-dynamic';
-
 export const metadata = {
   title: 'Series | Jooyong DevLog',
   description: '시리즈별로 정리된 글 모음',
