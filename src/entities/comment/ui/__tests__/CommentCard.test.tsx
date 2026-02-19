@@ -14,6 +14,10 @@ const mockComment = {
   replies: [],
 };
 
+const deleteSlot = (commentId: number) => (
+  <button data-testid={`delete-${commentId}`}>삭제</button>
+);
+
 describe('<CommentCard />', () => {
   describe('렌더링', () => {
     it('댓글 내용을 표시해야 한다', () => {
@@ -29,6 +33,38 @@ describe('<CommentCard />', () => {
     it('작성일을 표시해야 한다', () => {
       render(<CommentCard comment={mockComment} />);
       expect(screen.getByText(/2024/)).toBeInTheDocument();
+    });
+  });
+
+  describe('삭제된 댓글', () => {
+    it('대댓글 없는 삭제 댓글은 렌더링하지 않아야 한다', () => {
+      const deletedComment = {
+        ...mockComment,
+        deletedAt: new Date(),
+        replies: [],
+      };
+      const { container } = render(<CommentCard comment={deletedComment} />);
+      expect(container.firstChild).toBeNull();
+    });
+
+    it('대댓글 있는 삭제 댓글은 "삭제된 댓글입니다."를 표시해야 한다', () => {
+      const deletedCommentWithReplies = {
+        ...mockComment,
+        deletedAt: new Date(),
+        replies: [
+          {
+            id: 2,
+            content: 'Reply comment',
+            createdAt: new Date('2024-01-02'),
+            user: { id: 'user-2', nickname: 'Replier', profile: '' },
+          },
+        ],
+      };
+      render(<CommentCard comment={deletedCommentWithReplies} />);
+      expect(screen.getByText('삭제된 댓글입니다.')).toBeInTheDocument();
+      expect(
+        screen.queryByText('This is a test comment')
+      ).not.toBeInTheDocument();
     });
   });
 
@@ -66,27 +102,37 @@ describe('<CommentCard />', () => {
 
   describe('권한 관리', () => {
     it('본인 댓글일 때 삭제 버튼을 표시해야 한다', () => {
-      const onDelete = vi.fn();
       render(
         <CommentCard
           comment={mockComment}
           currentUserId="user-1"
-          onDelete={onDelete}
+          deleteSlot={deleteSlot}
         />
       );
       expect(screen.getByText('삭제')).toBeInTheDocument();
     });
 
     it('타인 댓글일 때 삭제 버튼을 숨겨야 한다', () => {
-      const onDelete = vi.fn();
       render(
         <CommentCard
           comment={mockComment}
           currentUserId="user-other"
-          onDelete={onDelete}
+          deleteSlot={deleteSlot}
         />
       );
       expect(screen.queryByText('삭제')).not.toBeInTheDocument();
+    });
+
+    it('admin은 타인 댓글도 삭제 버튼을 표시해야 한다', () => {
+      render(
+        <CommentCard
+          comment={mockComment}
+          currentUserId="admin-user"
+          isAdmin
+          deleteSlot={deleteSlot}
+        />
+      );
+      expect(screen.getByText('삭제')).toBeInTheDocument();
     });
 
     it('답글 버튼 클릭 시 onReply가 호출되어야 한다', () => {

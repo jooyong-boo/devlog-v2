@@ -1,6 +1,7 @@
 import { prisma } from '@/shared/lib/prisma';
 import { CommentCard } from '@/entities/comment/ui/CommentCard';
 import { CommentForm } from '../create/ui/CommentForm';
+import { DeleteCommentButton } from '../delete/ui/DeleteCommentButton';
 import { auth } from '@/shared/lib/auth';
 
 interface CommentSectionProps {
@@ -14,7 +15,6 @@ export async function CommentSection({ postId }: CommentSectionProps) {
     where: {
       postId,
       parentId: null,
-      deletedAt: null,
     },
     include: {
       user: {
@@ -45,9 +45,16 @@ export async function CommentSection({ postId }: CommentSectionProps) {
     orderBy: { createdAt: 'desc' },
   });
 
+  // 삭제됐고 대댓글도 없는 댓글은 카운트에서 제외
+  const visibleCount = comments.filter(
+    (c) => !c.deletedAt || (c.replies && c.replies.length > 0)
+  ).length;
+
+  const isAdmin = session?.user.role === 'admin';
+
   return (
     <div className="space-y-6 animate-fade-in">
-      <h2 className="text-2xl font-bold">댓글 {comments.length}개</h2>
+      <h2 className="text-2xl font-bold">댓글 {visibleCount}개</h2>
 
       <CommentForm postId={postId} />
 
@@ -55,6 +62,10 @@ export async function CommentSection({ postId }: CommentSectionProps) {
         {comments.map((comment) => (
           <CommentCard
             key={comment.id}
+            isAdmin={isAdmin}
+            deleteSlot={(commentId) => (
+              <DeleteCommentButton commentId={commentId} />
+            )}
             comment={{
               ...comment,
               user: {

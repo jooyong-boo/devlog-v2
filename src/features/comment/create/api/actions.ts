@@ -39,35 +39,3 @@ export async function createComment(
     return { success: false, error: 'Failed to create comment' };
   }
 }
-
-export async function deleteComment(commentId: number, postId: string) {
-  const session = await auth();
-
-  if (!session) {
-    return { success: false, error: 'Unauthorized' };
-  }
-
-  try {
-    const comment = await prisma.comment.findUnique({
-      where: { id: commentId },
-    });
-
-    if (!comment || comment.userId !== session.user.id) {
-      return { success: false, error: 'Forbidden' };
-    }
-
-    await prisma.comment.update({
-      where: { id: commentId },
-      data: {
-        deletedAt: new Date(),
-        deleteUser: session.user.id,
-      },
-    });
-
-    revalidatePath(`/posts/${postId}`);
-
-    return { success: true };
-  } catch {
-    return { success: false, error: 'Failed to delete comment' };
-  }
-}
