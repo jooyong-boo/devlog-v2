@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Label from '@radix-ui/react-label';
 import { cn } from '@/shared/lib/utils';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -29,18 +30,25 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full">
         {label && (
-          <label
+          <Label.Root
             htmlFor={inputId}
             className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300"
           >
             {label}
-            {required && <span className="text-red-500 ml-1">*</span>}
-          </label>
+            {required && (
+              <span className="text-red-500 ml-1" aria-hidden="true">
+                *
+              </span>
+            )}
+          </Label.Root>
         )}
 
         <div className="relative">
           {leftIcon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <div
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+              aria-hidden="true"
+            >
               {leftIcon}
             </div>
           )}
@@ -63,6 +71,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
               className
             )}
             aria-invalid={error ? 'true' : 'false'}
+            aria-required={required}
             aria-describedby={
               error
                 ? `${inputId}-error`
@@ -74,14 +83,21 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           />
 
           {rightIcon && (
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+            <div
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"
+              aria-hidden="true"
+            >
               {rightIcon}
             </div>
           )}
         </div>
 
         {error && (
-          <p id={`${inputId}-error`} className="text-sm text-red-500 mt-1">
+          <p
+            id={`${inputId}-error`}
+            className="text-sm text-red-500 mt-1"
+            role="alert"
+          >
             {error}
           </p>
         )}

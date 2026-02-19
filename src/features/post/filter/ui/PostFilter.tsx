@@ -32,29 +32,36 @@ export function PostFilter({ projects = [] }: PostFilterProps) {
     router.push(`${pathname}?${createQueryString(name, value)}`);
   };
 
+  const projectOptions = [
+    { value: '', label: '전체 프로젝트' },
+    ...projects.map((project) => ({
+      value: project.id.toString(),
+      label: project.name,
+    })),
+  ];
+
+  const sortOptions = [
+    { value: 'latest', label: '최신순' },
+    { value: 'popular', label: '인기순' },
+  ];
+
   return (
     <div className="flex gap-4 items-center justify-between flex-wrap">
       <div className="flex gap-4">
         <Select
+          options={projectOptions}
           value={searchParams.get('project') || ''}
-          onChange={(e) => handleFilterChange('project', e.target.value)}
-        >
-          <option value="">전체 프로젝트</option>
-          {projects.map((project) => (
-            <option key={project.id} value={project.id.toString()}>
-              {project.name}
-            </option>
-          ))}
-        </Select>
+          onValueChange={(value) => handleFilterChange('project', value)}
+          placeholder="전체 프로젝트"
+        />
       </div>
 
       <Select
+        options={sortOptions}
         value={searchParams.get('sort') || 'latest'}
-        onChange={(e) => handleFilterChange('sort', e.target.value)}
-      >
-        <option value="latest">최신순</option>
-        <option value="popular">인기순</option>
-      </Select>
+        onValueChange={(value) => handleFilterChange('sort', value)}
+        placeholder="정렬"
+      />
     </div>
   );
 }

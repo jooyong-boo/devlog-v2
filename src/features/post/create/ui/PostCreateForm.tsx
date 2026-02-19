@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
@@ -33,6 +33,7 @@ export function PostCreateForm({
     formState: { errors, isSubmitting },
     setValue,
     watch,
+    control,
   } = useForm({
     resolver: zodResolver(postFormSchema),
     defaultValues: {
@@ -82,6 +83,27 @@ export function PostCreateForm({
     }
   };
 
+  const projectOptions = [
+    { value: '', label: '프로젝트 선택' },
+    ...projects.map((project) => ({
+      value: project.id.toString(),
+      label: project.name,
+    })),
+  ];
+
+  const seriesOptions = [
+    { value: '', label: '시리즈 선택 (선택사항)' },
+    ...series.map((s) => ({
+      value: s.id.toString(),
+      label: s.title,
+    })),
+  ];
+
+  const statusOptions = [
+    { value: 'draft', label: '초안' },
+    { value: 'published', label: '발행' },
+  ];
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       {/* 기본 정보 */}
@@ -108,33 +130,37 @@ export function PostCreateForm({
       <div className="space-y-4">
         <h3 className="text-lg font-semibold border-b pb-2">분류</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Select
-            {...register('projectId', { valueAsNumber: true })}
-            label="프로젝트"
-            error={errors.projectId?.message}
-            required
-          >
-            <option value="">프로젝트 선택</option>
-            {projects.map((project) => (
-              <option key={project.id} value={project.id}>
-                {project.name}
-              </option>
-            ))}
-          </Select>
+          <Controller
+            name="projectId"
+            control={control}
+            render={({ field }) => (
+              <Select
+                options={projectOptions}
+                value={field.value ? field.value.toString() : ''}
+                onValueChange={(value) =>
+                  field.onChange(value ? Number(value) : undefined)
+                }
+                label="프로젝트"
+                error={errors.projectId?.message}
+                required
+              />
+            )}
+          />
 
-          <Select
-            {...register('seriesId', {
-              setValueAs: (v: string) => (v === '' ? undefined : Number(v)),
-            })}
-            label="시리즈 (선택)"
-          >
-            <option value="">시리즈 선택 (선택사항)</option>
-            {series.map((s) => (
-              <option key={s.id} value={s.id}>
-                {s.title}
-              </option>
-            ))}
-          </Select>
+          <Controller
+            name="seriesId"
+            control={control}
+            render={({ field }) => (
+              <Select
+                options={seriesOptions}
+                value={field.value ? field.value.toString() : ''}
+                onValueChange={(value) =>
+                  field.onChange(value ? Number(value) : undefined)
+                }
+                label="시리즈 (선택)"
+              />
+            )}
+          />
         </div>
       </div>
 
@@ -143,7 +169,10 @@ export function PostCreateForm({
         <h3 className="text-lg font-semibold border-b pb-2">내용</h3>
         <div>
           <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
-            본문 <span className="text-red-500">*</span>
+            본문{' '}
+            <span className="text-red-500" aria-hidden="true">
+              *
+            </span>
           </label>
           <TiptapEditor
             content={content}
@@ -152,7 +181,7 @@ export function PostCreateForm({
             }
           />
           {errors.content && (
-            <p className="text-sm text-red-500 mt-1">
+            <p className="text-sm text-red-500 mt-1" role="alert">
               {errors.content.message}
             </p>
           )}
@@ -169,10 +198,18 @@ export function PostCreateForm({
           helperText="쉼표로 구분하여 입력하세요"
           error={errors.tags?.message}
         />
-        <Select {...register('status')} label="상태">
-          <option value="draft">초안</option>
-          <option value="published">발행</option>
-        </Select>
+        <Controller
+          name="status"
+          control={control}
+          render={({ field }) => (
+            <Select
+              options={statusOptions}
+              value={field.value}
+              onValueChange={field.onChange}
+              label="상태"
+            />
+          )}
+        />
       </div>
 
       {/* 제출 */}
