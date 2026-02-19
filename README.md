@@ -92,23 +92,48 @@ pnpm dev
 
 ## 프로젝트 구조
 
+[Feature-Sliced Design (FSD)](https://feature-sliced.design/) 아키텍처를 적용하고 있습니다.
+임포트 방향: `app → widgets → features → entities → shared`
+
 ```
 jooyong-devlog/
-├── app/                    # Next.js App Router 페이지
-│   ├── layout.tsx         # 루트 레이아웃
-│   ├── page.tsx           # 홈 페이지
-│   └── globals.css        # 글로벌 스타일 (Tailwind CSS v4)
-├── components/            # 재사용 가능한 React 컴포넌트
-├── lib/                   # 유틸리티 및 헬퍼 함수
-│   └── prisma.ts          # Prisma 클라이언트 싱글톤
-├── prisma/                # Prisma 스키마 및 마이그레이션
-│   └── schema.prisma      # 데이터베이스 스키마
-├── __tests__/             # 테스트 파일
-│   ├── setup.ts           # 테스트 환경 설정
-│   └── example.test.tsx   # 예제 테스트
-├── .storybook/            # Storybook 설정
-└── public/                # 정적 파일
+├── app/                        # Next.js App Router 페이지
+│   ├── (public)/               # 공개 페이지
+│   ├── (admin)/                # 관리자 페이지
+│   ├── auth/                   # 인증 페이지
+│   ├── api/                    # API 라우트
+│   ├── layout.tsx              # 루트 레이아웃
+│   └── globals.css             # 글로벌 스타일 (Tailwind CSS v4)
+├── src/
+│   ├── widgets/                # 레이아웃 조합 컴포넌트
+│   │   ├── header/
+│   │   ├── footer/
+│   │   ├── sidebar/
+│   │   ├── admin-sidebar/
+│   │   └── post-list/
+│   ├── features/               # 유스케이스별 비즈니스 로직
+│   │   ├── post/               # 게시글 생성, 필터링
+│   │   ├── comment/            # 댓글 생성
+│   │   ├── portfolio/          # 포트폴리오 편집
+│   │   ├── resume/             # 이력서 편집
+│   │   └── view-tracking/      # 조회수 추적
+│   ├── entities/               # 도메인 모델
+│   │   ├── post/
+│   │   ├── comment/
+│   │   ├── portfolio/
+│   │   └── resume/
+│   └── shared/                 # 공유 모듈
+│       ├── ui/                 # 재사용 UI 컴포넌트
+│       ├── lib/                # 유틸리티 (prisma, auth, utils 등)
+│       ├── config/             # 사이트 설정, 테스트 설정
+│       └── types/              # 타입 정의
+├── prisma/                     # Prisma 스키마 및 마이그레이션
+│   └── schema.prisma
+├── .storybook/                 # Storybook 설정
+└── public/                     # 정적 파일
 ```
+
+각 FSD 슬라이스는 `ui/`, `model/`, `api/` 세그먼트로 구성되며, 테스트는 해당 슬라이스 내 `__tests__/` 폴더에 공존 배치합니다.
 
 ## Tailwind CSS v4
 
