@@ -2,7 +2,7 @@
 
 import { auth } from '@/shared/lib/auth';
 import { prisma } from '@/shared/lib/prisma';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 export async function upsertResume(content: string, isPublished: boolean) {
   const session = await auth();
@@ -36,6 +36,7 @@ export async function upsertResume(content: string, isPublished: boolean) {
 
     revalidatePath('/resume');
     revalidatePath('/admin/resume');
+    revalidateTag('resume', 'max');
 
     return { success: true };
   } catch {
