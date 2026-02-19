@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { auth } from '../../../../auth';
 import { prisma } from '@/shared/lib/prisma';
 
@@ -33,6 +34,8 @@ export async function POST(request: Request) {
       updateUser: session.user.id,
     },
   });
+
+  revalidateTag('posts', 'max');
 
   return NextResponse.json(series, { status: 201 });
 }
