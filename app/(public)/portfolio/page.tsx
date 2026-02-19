@@ -1,5 +1,7 @@
 import { getPublishedPortfolio } from '@/entities/portfolio/api/queries';
 
+export const dynamic = 'force-dynamic';
+
 export default async function PortfolioPage() {
   const portfolio = await getPublishedPortfolio();
 
