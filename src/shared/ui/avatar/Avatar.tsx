@@ -27,10 +27,10 @@ export const Avatar: React.FC<AvatarProps> = ({
     lg: 'w-12 h-12 text-base',
   };
 
-  const imageSizes = {
-    sm: '32px',
-    md: '40px',
-    lg: '48px',
+  const imageDimensions = {
+    sm: 32,
+    md: 40,
+    lg: 48,
   };
 
   const showFallback = !src || imageError;
@@ -53,8 +53,8 @@ export const Avatar: React.FC<AvatarProps> = ({
         <Image
           src={src}
           alt={alt}
-          fill
-          sizes={imageSizes[size]}
+          width={imageDimensions[size]}
+          height={imageDimensions[size]}
           className="object-cover"
           onError={() => setImageError(true)}
         />
