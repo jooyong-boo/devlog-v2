@@ -6,16 +6,25 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { Select } from '@/shared/ui/select';
-import { createPost } from '../api/actions';
+import { createPost, updatePost } from '../api/actions';
 import { postFormSchema, type PostFormData } from '../model/schema';
 import { TiptapEditor } from './TiptapEditor';
 
 interface PostCreateFormProps {
   projects: Array<{ id: number; name: string }>;
   series: Array<{ id: number; title: string }>;
+  mode?: 'create' | 'edit';
+  initialData?: Partial<PostFormData>;
+  postId?: string;
 }
 
-export function PostCreateForm({ projects, series }: PostCreateFormProps) {
+export function PostCreateForm({
+  projects,
+  series,
+  mode = 'create',
+  initialData,
+  postId,
+}: PostCreateFormProps) {
   const router = useRouter();
 
   const {
@@ -31,6 +40,7 @@ export function PostCreateForm({ projects, series }: PostCreateFormProps) {
       content: '',
       tags: '',
       thumbnail: '',
+      ...initialData,
     },
   });
 
@@ -49,7 +59,14 @@ export function PostCreateForm({ projects, series }: PostCreateFormProps) {
       if (formValues.tags) formData.set('tags', formValues.tags);
       formData.set('status', formValues.status);
 
-      const result = await createPost(formData);
+      if (mode === 'edit' && !postId) {
+        throw new Error('PostCreateForm: edit mode requires postId');
+      }
+
+      const result =
+        mode === 'edit' && postId
+          ? await updatePost(postId, formData)
+          : await createPost(formData);
 
       if (result.success) {
         router.push('/admin/posts');
@@ -57,7 +74,11 @@ export function PostCreateForm({ projects, series }: PostCreateFormProps) {
         alert(result.error);
       }
     } catch {
-      alert('게시글 작성 중 오류가 발생했습니다.');
+      alert(
+        mode === 'edit'
+          ? '게시글 수정 중 오류가 발생했습니다.'
+          : '게시글 작성 중 오류가 발생했습니다.'
+      );
     }
   };
 
@@ -157,7 +178,7 @@ export function PostCreateForm({ projects, series }: PostCreateFormProps) {
       {/* 제출 */}
       <div className="flex gap-4 pt-6 border-t">
         <Button type="submit" loading={isSubmitting}>
-          작성하기
+          {mode === 'edit' ? '수정하기' : '작성하기'}
         </Button>
         <Button type="button" variant="outline" onClick={() => router.back()}>
           취소

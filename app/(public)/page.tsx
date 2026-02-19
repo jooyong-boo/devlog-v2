@@ -15,7 +15,11 @@ interface HomePageProps {
   }>;
 }
 
-export default async function HomePage({ searchParams }: HomePageProps) {
+async function HomePageContent({
+  searchParams,
+}: {
+  searchParams: HomePageProps['searchParams'];
+}) {
   const params = await searchParams;
   const page = parseInt(params.page || '1');
   const sort = (params.sort as 'latest' | 'popular') || 'latest';
@@ -27,28 +31,31 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   ]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-6">
-          <Suspense fallback={null}>
-            <PostFilter projects={projects} />
-          </Suspense>
-
-          <Suspense fallback={<PostListSkeleton />}>
-            <PostListWidget
-              posts={posts}
-              currentPage={page}
-              totalPages={totalPages}
-            />
-          </Suspense>
-        </div>
-
-        <aside className="lg:col-span-1">
-          <Suspense fallback={null}>
-            <Sidebar />
-          </Suspense>
-        </aside>
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="lg:col-span-2 space-y-6">
+        <PostFilter projects={projects} />
+        <PostListWidget
+          posts={posts}
+          currentPage={page}
+          totalPages={totalPages}
+        />
       </div>
+
+      <aside className="lg:col-span-1">
+        <Suspense fallback={null}>
+          <Sidebar />
+        </Suspense>
+      </aside>
+    </div>
+  );
+}
+
+export default function HomePage({ searchParams }: HomePageProps) {
+  return (
+    <div className="container mx-auto px-4 py-8">
+      <Suspense fallback={<PostListSkeleton />}>
+        <HomePageContent searchParams={searchParams} />
+      </Suspense>
     </div>
   );
 }

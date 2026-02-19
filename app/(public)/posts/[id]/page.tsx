@@ -9,7 +9,11 @@ interface PostDetailPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function PostDetailPage({ params }: PostDetailPageProps) {
+async function PostDetailContent({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
   const post = await getPostById(id);
 
@@ -34,6 +38,20 @@ export default async function PostDetailPage({ params }: PostDetailPageProps) {
         </Suspense>
       </div>
     </div>
+  );
+}
+
+export default function PostDetailPage({ params }: PostDetailPageProps) {
+  return (
+    <Suspense
+      fallback={
+        <div className="container mx-auto px-4 py-8">
+          <div className="h-96 animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg" />
+        </div>
+      }
+    >
+      <PostDetailContent params={params} />
+    </Suspense>
   );
 }
 
