@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Label from '@radix-ui/react-label';
 import { cn } from '@/shared/lib/utils';
 
 export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -14,13 +15,17 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className="w-full">
         {label && (
-          <label
+          <Label.Root
             htmlFor={textareaId}
             className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300"
           >
             {label}
-            {required && <span className="text-red-500 ml-1">*</span>}
-          </label>
+            {required && (
+              <span className="text-red-500 ml-1" aria-hidden="true">
+                *
+              </span>
+            )}
+          </Label.Root>
         )}
 
         <textarea
@@ -39,6 +44,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             className
           )}
           aria-invalid={error ? 'true' : 'false'}
+          aria-required={required}
           aria-describedby={
             error
               ? `${textareaId}-error`
@@ -50,7 +56,11 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         />
 
         {error && (
-          <p id={`${textareaId}-error`} className="text-sm text-red-500 mt-1">
+          <p
+            id={`${textareaId}-error`}
+            className="text-sm text-red-500 mt-1"
+            role="alert"
+          >
             {error}
           </p>
         )}
