@@ -2,14 +2,24 @@ import { cn } from '@/shared/lib/utils';
 import { formatDate } from '@/shared/lib/date';
 import { Badge } from '@/shared/ui/badge';
 import { Avatar } from '@/shared/ui/avatar';
-import { ImageIcon } from 'lucide-react';
+import { ImageIcon, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+
+function extractExcerpt(html: string, maxLength = 150): string {
+  const text = html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + '...';
+}
 
 export interface PostCardProps {
   post: {
     id: string;
     title: string;
+    content: string;
     thumbnail: string;
     readingTime: number;
     viewCount: number;
@@ -28,6 +38,7 @@ export interface PostCardProps {
 
 export function PostCard({ post, layout = 'grid' }: PostCardProps) {
   const isGrid = layout === 'grid';
+  const excerpt = extractExcerpt(post.content);
 
   return (
     <article
@@ -86,14 +97,32 @@ export function PostCard({ post, layout = 'grid' }: PostCardProps) {
           </span>
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          {post.tags.slice(0, 3).map((tag) => (
-            <Link key={tag.name} href={`/tags/${tag.name}`}>
-              <Badge variant="default" size="sm">
-                #{tag.name}
-              </Badge>
+        {isGrid && excerpt && (
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">
+            {excerpt}
+          </p>
+        )}
+
+        <div className="flex items-center justify-between">
+          <div className="flex flex-wrap gap-2">
+            {post.tags.slice(0, 3).map((tag) => (
+              <Link key={tag.name} href={`/tags/${tag.name}`}>
+                <Badge variant="default" size="sm">
+                  #{tag.name}
+                </Badge>
+              </Link>
+            ))}
+          </div>
+
+          {isGrid && (
+            <Link
+              href={`/posts/${post.id}`}
+              className="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700 font-medium shrink-0 ml-2"
+            >
+              Read more
+              <ChevronRight className="w-4 h-4" />
             </Link>
-          ))}
+          )}
         </div>
       </div>
     </article>
