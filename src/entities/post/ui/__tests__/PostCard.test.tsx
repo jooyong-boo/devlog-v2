@@ -25,6 +25,7 @@ vi.mock('next/link', () => ({
 const mockPost = {
   id: '1',
   title: 'Test Post Title',
+  content: '<p>This is the post content with some text to display.</p>',
   thumbnail: 'https://example.com/image.jpg',
   readingTime: 5,
   viewCount: 100,
@@ -102,6 +103,47 @@ describe('<PostCard />', () => {
       expect(
         tagLinks.some((link) => link.getAttribute('href') === '/tags/React')
       ).toBe(true);
+    });
+  });
+
+  describe('excerpt', () => {
+    it('grid 레이아웃에서 content HTML 태그를 제거한 본문 발췌를 표시해야 한다', () => {
+      render(<PostCard post={mockPost} layout="grid" />);
+      expect(
+        screen.getByText('This is the post content with some text to display.')
+      ).toBeInTheDocument();
+    });
+
+    it('grid 레이아웃에서 150자 초과 content는 말줄임(...) 처리해야 한다', () => {
+      const longContent = `<p>${'가'.repeat(200)}</p>`;
+      render(
+        <PostCard post={{ ...mockPost, content: longContent }} layout="grid" />
+      );
+      const excerpt = screen.getByText(/\.\.\.$/);
+      expect(excerpt.textContent?.length).toBeLessThanOrEqual(153); // 150자 + '...'
+    });
+
+    it('list 레이아웃에서는 excerpt를 표시하지 않아야 한다', () => {
+      render(<PostCard post={mockPost} layout="list" />);
+      expect(
+        screen.queryByText(
+          'This is the post content with some text to display.'
+        )
+      ).not.toBeInTheDocument();
+    });
+
+    it('grid 레이아웃에서 "Read more" 링크를 표시해야 한다', () => {
+      render(<PostCard post={mockPost} layout="grid" />);
+      const readMoreLink = screen.getByRole('link', { name: /read more/i });
+      expect(readMoreLink).toBeInTheDocument();
+      expect(readMoreLink.getAttribute('href')).toBe('/posts/1');
+    });
+
+    it('list 레이아웃에서는 "Read more" 링크를 표시하지 않아야 한다', () => {
+      render(<PostCard post={mockPost} layout="list" />);
+      expect(
+        screen.queryByRole('link', { name: /read more/i })
+      ).not.toBeInTheDocument();
     });
   });
 });

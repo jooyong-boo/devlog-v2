@@ -11,6 +11,7 @@ interface PostListWidgetProps {
   posts: Array<{
     id: string;
     title: string;
+    content: string;
     thumbnail: string;
     readingTime: number;
     viewCount: number;

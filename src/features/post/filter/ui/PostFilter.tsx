@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useCallback } from 'react';
 import { Select } from '@/shared/ui/select';
+import { PostSortTabs } from './PostSortTabs';
 
 interface PostFilterProps {
   projects?: Array<{ id: number; name: string }>;
@@ -33,35 +34,27 @@ export function PostFilter({ projects = [] }: PostFilterProps) {
   };
 
   const projectOptions = [
-    { value: '', label: '전체 프로젝트' },
+    { value: 'all', label: '전체 프로젝트' },
     ...projects.map((project) => ({
       value: project.id.toString(),
       label: project.name,
     })),
   ];
 
-  const sortOptions = [
-    { value: 'latest', label: '최신순' },
-    { value: 'popular', label: '인기순' },
-  ];
-
   return (
     <div className="flex gap-4 items-center justify-between flex-wrap">
+      <PostSortTabs />
+
       <div className="flex gap-4">
         <Select
           options={projectOptions}
-          value={searchParams.get('project') || ''}
-          onValueChange={(value) => handleFilterChange('project', value)}
+          value={searchParams.get('project') || 'all'}
+          onValueChange={(value) =>
+            handleFilterChange('project', value === 'all' ? '' : value)
+          }
           placeholder="전체 프로젝트"
         />
       </div>
-
-      <Select
-        options={sortOptions}
-        value={searchParams.get('sort') || 'latest'}
-        onValueChange={(value) => handleFilterChange('sort', value)}
-        placeholder="정렬"
-      />
     </div>
   );
 }

@@ -3,11 +3,12 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import { Github } from 'lucide-react';
+import { Github, Search } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { siteConfig } from '@/shared/config/site';
 import { Button } from '@/shared/ui/button';
 import { UserDropdown } from './UserDropdown';
+import { ThemeToggle } from './ThemeToggle';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -45,6 +46,16 @@ export function Header() {
               {link.label}
             </Link>
           ))}
+
+          <button
+            className="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors"
+            title="검색"
+            aria-label="검색"
+          >
+            <Search className="w-5 h-5" />
+          </button>
+
+          <ThemeToggle />
 
           <a
             href={siteConfig.links.github}

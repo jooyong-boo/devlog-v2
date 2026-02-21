@@ -4,8 +4,9 @@ import {
   PostListWidget,
   PostListSkeleton,
 } from '@/widgets/post-list/ui/PostListWidget';
-import { PostFilter } from '@/features/post/filter/ui/PostFilter';
 import { Sidebar } from '@/widgets/sidebar/ui/Sidebar';
+import { FeaturedPostBanner } from '@/widgets/featured-post';
+import { PostFilter } from '@/features/post/filter/ui/PostFilter';
 
 interface HomePageProps {
   searchParams: Promise<{
@@ -53,6 +54,9 @@ async function HomePageContent({
 export default function HomePage({ searchParams }: HomePageProps) {
   return (
     <div className="container mx-auto px-4 py-8">
+      <Suspense fallback={null}>
+        <FeaturedPostBanner />
+      </Suspense>
       <Suspense fallback={<PostListSkeleton />}>
         <HomePageContent searchParams={searchParams} />
       </Suspense>

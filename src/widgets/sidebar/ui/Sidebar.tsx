@@ -4,6 +4,8 @@ import { Avatar } from '@/shared/ui/avatar';
 import { siteConfig } from '@/shared/config/site';
 import Link from 'next/link';
 import { prisma } from '@/shared/lib/prisma';
+import { NewsletterSignup } from './NewsletterSignup';
+import { WeeklyRankings } from './WeeklyRankings';
 
 async function getPopularTags() {
   const tags = await prisma.tag.findMany({
@@ -48,6 +50,12 @@ export async function Sidebar() {
 
   return (
     <div className="space-y-6">
+      {/* 뉴스레터 구독 */}
+      <NewsletterSignup />
+
+      {/* 이번 주 인기 */}
+      <WeeklyRankings />
+
       {/* 프로필 카드 */}
       <Card variant="bordered" padding="lg">
         <div className="flex flex-col items-center text-center">
