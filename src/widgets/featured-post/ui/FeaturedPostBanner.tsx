@@ -15,7 +15,8 @@ export async function FeaturedPostBanner() {
 
   if (!post) return null;
 
-  const excerpt = extractTextFromHtml(post.content).slice(0, 150);
+  const fullText = extractTextFromHtml(post.content);
+  const excerpt = fullText.slice(0, 150);
 
   return (
     <div className="rounded-xl overflow-hidden mb-8 bg-[#101622]">
@@ -34,7 +35,7 @@ export async function FeaturedPostBanner() {
           {excerpt && (
             <p className="text-gray-400 text-sm mb-6 line-clamp-2">
               {excerpt}
-              {excerpt.length === 150 ? '...' : ''}
+              {fullText.length > 150 ? '...' : ''}
             </p>
           )}
 

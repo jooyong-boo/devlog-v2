@@ -4,9 +4,9 @@ import {
   PostListWidget,
   PostListSkeleton,
 } from '@/widgets/post-list/ui/PostListWidget';
-import { PostFilter } from '@/features/post/filter/ui/PostFilter';
 import { Sidebar } from '@/widgets/sidebar/ui/Sidebar';
 import { FeaturedPostBanner } from '@/widgets/featured-post';
+import { PostFilter } from '@/features/post/filter/ui/PostFilter';
 
 interface HomePageProps {
   searchParams: Promise<{

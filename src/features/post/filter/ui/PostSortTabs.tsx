@@ -30,7 +30,9 @@ export function PostSortTabs() {
       {SORT_OPTIONS.map((option) => (
         <button
           key={option.value}
+          type="button"
           onClick={() => handleSortChange(option.value)}
+          aria-pressed={currentSort === option.value}
           className={cn(
             'px-4 py-1.5 rounded-full text-sm font-medium transition-colors',
             currentSort === option.value
