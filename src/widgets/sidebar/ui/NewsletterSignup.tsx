@@ -3,7 +3,10 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { newsletterSchema, type NewsletterFormData } from '../model/schema';
+import {
+  newsletterSchema,
+  type NewsletterFormData,
+} from '@/features/newsletter/model/schema';
 
 export function NewsletterSignup() {
   const [submitted, setSubmitted] = useState(false);
