@@ -24,7 +24,6 @@ export function ResumeEditForm({
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
-    watch,
   } = useForm<ResumeEditFormData>({
     resolver: zodResolver(resumeEditSchema),
     defaultValues: {
@@ -32,8 +31,6 @@ export function ResumeEditForm({
       isPublished: initialIsPublished,
     },
   });
-
-  const content = watch('content');
 
   const onSubmit = async (data: ResumeEditFormData) => {
     const result = await upsertResume(data.content, data.isPublished);
@@ -50,7 +47,7 @@ export function ResumeEditForm({
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
         <TiptapEditor
-          content={content}
+          content={initialContent}
           onChange={(html) =>
             setValue('content', html, { shouldValidate: true })
           }
