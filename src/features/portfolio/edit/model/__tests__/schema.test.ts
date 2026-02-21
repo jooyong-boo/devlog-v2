@@ -38,4 +38,15 @@ describe('portfolioEditSchema', () => {
     const result = portfolioEditSchema.safeParse({ isPublished: false });
     expect(result.success).toBe(false);
   });
+
+  it('공백만 있는 내용은 실패해야 한다', () => {
+    const result = portfolioEditSchema.safeParse({
+      content: '   ',
+      isPublished: false,
+    });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues[0].message).toBe('내용을 입력하세요');
+    }
+  });
 });
