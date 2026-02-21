@@ -124,3 +124,58 @@ export async function getProjects() {
     select: { id: true, name: true },
   });
 }
+
+export async function getFeaturedPost() {
+  'use cache';
+  cacheTag('posts');
+  cacheLife({ revalidate: 60 });
+
+  const post = await prisma.post.findFirst({
+    where: { status: 'published', deletedAt: null },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          nickname: true,
+          profile: true,
+          image: true,
+        },
+      },
+      project: {
+        select: { id: true, name: true },
+      },
+    },
+    orderBy: { viewCount: 'desc' },
+  });
+
+  if (!post) return null;
+
+  return {
+    ...post,
+    user: {
+      ...post.user,
+      nickname: post.user.nickname || post.user.name || 'Anonymous',
+      profile: post.user.profile || post.user.image || '',
+    },
+  };
+}
+
+export async function getPopularPosts(limit: number) {
+  'use cache';
+  cacheTag('posts');
+  cacheLife({ revalidate: 60 });
+
+  const posts = await prisma.post.findMany({
+    where: { status: 'published', deletedAt: null },
+    select: {
+      id: true,
+      title: true,
+      viewCount: true,
+    },
+    orderBy: { viewCount: 'desc' },
+    take: limit,
+  });
+
+  return posts;
+}
