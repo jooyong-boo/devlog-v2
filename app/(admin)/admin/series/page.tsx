@@ -103,10 +103,10 @@ export default function AdminSeriesPage() {
 
   return (
     <div className="max-w-2xl">
-      <h1 className="text-3xl font-bold mb-8">시리즈 관리</h1>
+      <h1 className="mb-8 text-3xl font-bold">시리즈 관리</h1>
 
       <Card variant="bordered" padding="lg" className="mb-8">
-        <h2 className="text-lg font-semibold mb-4">새 시리즈 추가</h2>
+        <h2 className="mb-4 text-lg font-semibold">새 시리즈 추가</h2>
         <form onSubmit={handleCreate} className="space-y-4">
           <Input
             label="시리즈 제목"
@@ -163,7 +163,7 @@ export default function AdminSeriesPage() {
                         {series.description}
                       </p>
                     )}
-                    <p className="text-xs text-gray-400 mt-1">
+                    <p className="mt-1 text-xs text-gray-400">
                       {series._count.posts}개의 글
                     </p>
                   </div>

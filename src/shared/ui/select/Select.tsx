@@ -50,11 +50,11 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
         {label && (
           <Label.Root
             htmlFor={selectId}
-            className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300"
+            className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
             {label}
             {required && (
-              <span className="text-red-500 ml-1" aria-hidden="true">
+              <span className="ml-1 text-red-500" aria-hidden="true">
                 *
               </span>
             )}
@@ -79,11 +79,11 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                   : undefined
             }
             className={cn(
-              'flex w-full items-center justify-between px-3 py-2 border rounded-lg transition-colors',
+              'flex w-full items-center justify-between rounded-lg border px-3 py-2 transition-colors',
               'bg-white dark:bg-gray-800',
               'text-gray-900 dark:text-gray-100',
-              'focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent',
-              'disabled:opacity-50 disabled:cursor-not-allowed',
+              'focus:border-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none',
+              'disabled:cursor-not-allowed disabled:opacity-50',
               'data-[placeholder]:text-gray-400 dark:data-[placeholder]:text-gray-500',
               error
                 ? 'border-red-500 focus:ring-red-500'
@@ -94,7 +94,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
             <RadixSelect.Value placeholder={placeholder} />
             <RadixSelect.Icon asChild>
               <ChevronDown
-                className="h-4 w-4 text-gray-400 shrink-0"
+                className="h-4 w-4 shrink-0 text-gray-400"
                 aria-hidden="true"
               />
             </RadixSelect.Icon>
@@ -111,7 +111,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
               position="popper"
               sideOffset={4}
             >
-              <RadixSelect.ScrollUpButton className="flex items-center justify-center h-6 text-gray-500 cursor-default">
+              <RadixSelect.ScrollUpButton className="flex h-6 cursor-default items-center justify-center text-gray-500">
                 <ChevronUp className="h-4 w-4" />
               </RadixSelect.ScrollUpButton>
 
@@ -122,10 +122,10 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                     value={option.value}
                     disabled={option.disabled}
                     className={cn(
-                      'relative flex items-center px-3 py-2 text-sm rounded-md cursor-pointer select-none outline-none',
+                      'relative flex cursor-pointer items-center rounded-md px-3 py-2 text-sm outline-none select-none',
                       'text-gray-900 dark:text-gray-100',
-                      'focus:bg-blue-50 dark:focus:bg-blue-900/20 focus:text-blue-600 dark:focus:text-blue-400',
-                      'data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed',
+                      'focus:bg-blue-50 focus:text-blue-600 dark:focus:bg-blue-900/20 dark:focus:text-blue-400',
+                      'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50',
                       'data-[state=checked]:font-medium'
                     )}
                   >
@@ -137,7 +137,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                 ))}
               </RadixSelect.Viewport>
 
-              <RadixSelect.ScrollDownButton className="flex items-center justify-center h-6 text-gray-500 cursor-default">
+              <RadixSelect.ScrollDownButton className="flex h-6 cursor-default items-center justify-center text-gray-500">
                 <ChevronDown className="h-4 w-4" />
               </RadixSelect.ScrollDownButton>
             </RadixSelect.Content>
@@ -147,7 +147,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
         {error && (
           <p
             id={`${selectId}-error`}
-            className="text-sm text-red-500 mt-1"
+            className="mt-1 text-sm text-red-500"
             role="alert"
           >
             {error}
@@ -155,7 +155,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
         )}
 
         {!error && helperText && (
-          <p id={`${selectId}-helper`} className="text-sm text-gray-500 mt-1">
+          <p id={`${selectId}-helper`} className="mt-1 text-sm text-gray-500">
             {helperText}
           </p>
         )}

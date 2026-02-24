@@ -108,7 +108,7 @@ export function PostCreateForm({
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       {/* 기본 정보 */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold border-b pb-2">기본 정보</h3>
+        <h3 className="border-b pb-2 text-lg font-semibold">기본 정보</h3>
         <Input
           {...register('title')}
           label="제목"
@@ -128,8 +128,8 @@ export function PostCreateForm({
 
       {/* 분류 */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold border-b pb-2">분류</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <h3 className="border-b pb-2 text-lg font-semibold">분류</h3>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <Controller
             name="projectId"
             control={control}
@@ -166,9 +166,9 @@ export function PostCreateForm({
 
       {/* 내용 */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold border-b pb-2">내용</h3>
+        <h3 className="border-b pb-2 text-lg font-semibold">내용</h3>
         <div>
-          <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
+          <label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
             본문{' '}
             <span className="text-red-500" aria-hidden="true">
               *
@@ -181,7 +181,7 @@ export function PostCreateForm({
             }
           />
           {errors.content && (
-            <p className="text-sm text-red-500 mt-1" role="alert">
+            <p className="mt-1 text-sm text-red-500" role="alert">
               {errors.content.message}
             </p>
           )}
@@ -190,7 +190,7 @@ export function PostCreateForm({
 
       {/* 메타 정보 */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold border-b pb-2">메타 정보</h3>
+        <h3 className="border-b pb-2 text-lg font-semibold">메타 정보</h3>
         <Input
           {...register('tags')}
           label="태그"
@@ -213,7 +213,7 @@ export function PostCreateForm({
       </div>
 
       {/* 제출 */}
-      <div className="flex gap-4 pt-6 border-t">
+      <div className="flex gap-4 border-t pt-6">
         <Button type="submit" loading={isSubmitting}>
           {mode === 'edit' ? '수정하기' : '작성하기'}
         </Button>

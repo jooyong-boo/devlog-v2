@@ -26,14 +26,14 @@ export function NewsletterSignup() {
   };
 
   return (
-    <div className="rounded-lg p-6 bg-gradient-to-br from-blue-600 to-blue-700 text-white">
-      <h3 className="text-lg font-bold mb-1">뉴스레터 구독</h3>
-      <p className="text-blue-100 text-sm mb-4">
+    <div className="rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 p-6 text-white">
+      <h3 className="mb-1 text-lg font-bold">뉴스레터 구독</h3>
+      <p className="mb-4 text-sm text-blue-100">
         새 글이 올라올 때 이메일로 알림을 받아보세요.
       </p>
 
       {submitted ? (
-        <p className="text-sm text-blue-100 font-medium">
+        <p className="text-sm font-medium text-blue-100">
           구독해 주셔서 감사합니다!
         </p>
       ) : (
@@ -44,10 +44,10 @@ export function NewsletterSignup() {
               type="email"
               placeholder="이메일 주소 입력"
               disabled={isSubmitting}
-              className="w-full px-3 py-2 rounded text-sm text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white disabled:opacity-60"
+              className="w-full rounded px-3 py-2 text-sm text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-white focus:outline-none disabled:opacity-60"
             />
             {errors.email && (
-              <p className="text-xs text-blue-100 mt-1">
+              <p className="mt-1 text-xs text-blue-100">
                 {errors.email.message}
               </p>
             )}
@@ -55,7 +55,7 @@ export function NewsletterSignup() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-white text-blue-600 font-semibold text-sm py-2 rounded hover:bg-blue-50 transition-colors disabled:opacity-60"
+            className="w-full rounded bg-white py-2 text-sm font-semibold text-blue-600 transition-colors hover:bg-blue-50 disabled:opacity-60"
           >
             {isSubmitting ? '처리 중...' : '구독하기'}
           </button>

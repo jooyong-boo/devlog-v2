@@ -47,14 +47,14 @@ export function TiptapEditor({ content, onChange }: TiptapEditorProps) {
 
   if (!editor) {
     return (
-      <div className="border rounded-lg h-[450px] flex items-center justify-center text-gray-400">
+      <div className="flex h-[450px] items-center justify-center rounded-lg border text-gray-400">
         에디터 로딩 중...
       </div>
     );
   }
 
   return (
-    <div className="border border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden">
+    <div className="overflow-hidden rounded-lg border border-gray-300 dark:border-gray-600">
       <EditorToolbar editor={editor} />
       <EditorContent editor={editor} />
     </div>

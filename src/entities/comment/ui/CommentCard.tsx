@@ -60,15 +60,15 @@ export function CommentCard({
     <div
       className={
         depth > 0
-          ? 'ml-8 border-l-2 border-gray-200 dark:border-gray-700 pl-4'
+          ? 'ml-8 border-l-2 border-gray-200 pl-4 dark:border-gray-700'
           : ''
       }
     >
-      <div className="flex gap-3 mb-4">
+      <div className="mb-4 flex gap-3">
         {/* 삭제된 댓글: 아바타 자리 유지하되 내용 대체 */}
         {isDeleted ? (
           <div className="flex-1 py-2">
-            <p className="text-sm text-gray-400 dark:text-gray-600 italic">
+            <p className="text-sm text-gray-400 italic dark:text-gray-600">
               삭제된 댓글입니다.
             </p>
           </div>
@@ -81,8 +81,8 @@ export function CommentCard({
             />
 
             <div className="flex-1">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="font-semibold text-sm">
+              <div className="mb-1 flex items-center gap-2">
+                <span className="text-sm font-semibold">
                   {comment.user.nickname}
                 </span>
                 <span className="text-xs text-gray-500">
@@ -90,7 +90,7 @@ export function CommentCard({
                 </span>
               </div>
 
-              <p className="text-gray-800 dark:text-gray-200 mb-2 text-sm">
+              <p className="mb-2 text-sm text-gray-800 dark:text-gray-200">
                 {comment.content}
               </p>
 

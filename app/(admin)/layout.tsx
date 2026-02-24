@@ -10,12 +10,12 @@ export default function AdminLayout({
     <div className="flex min-h-screen">
       <Suspense
         fallback={
-          <aside className="w-64 bg-gray-900 min-h-screen flex-shrink-0" />
+          <aside className="min-h-screen w-64 flex-shrink-0 bg-gray-900" />
         }
       >
         <AdminSidebar />
       </Suspense>
-      <main className="flex-1 p-8 bg-gray-50 dark:bg-gray-900">{children}</main>
+      <main className="flex-1 bg-gray-50 p-8 dark:bg-gray-900">{children}</main>
     </div>
   );
 }

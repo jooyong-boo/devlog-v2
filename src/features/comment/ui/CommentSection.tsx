@@ -53,7 +53,7 @@ export async function CommentSection({ postId }: CommentSectionProps) {
   const isAdmin = session?.user.role === 'admin';
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="animate-fade-in space-y-6">
       <h2 className="text-2xl font-bold">댓글 {visibleCount}개</h2>
 
       <CommentForm postId={postId} />

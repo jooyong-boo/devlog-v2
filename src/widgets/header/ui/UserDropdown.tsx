@@ -18,10 +18,10 @@ export function UserDropdown({ user }: UserDropdownProps) {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button
-          className="flex items-center gap-2 hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 rounded-full"
+          className="flex items-center gap-2 rounded-full transition-opacity hover:opacity-80 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 focus-visible:outline-none"
           aria-label={`${user.name || user.email} 메뉴 열기`}
         >
-          <span className="text-sm font-medium hidden sm:inline">
+          <span className="hidden text-sm font-medium sm:inline">
             {user.name || user.email}
           </span>
           <Avatar
@@ -37,18 +37,18 @@ export function UserDropdown({ user }: UserDropdownProps) {
         <DropdownMenu.Content
           align="end"
           sideOffset={8}
-          className="z-50 w-48 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-lg py-2 animate-in fade-in-0 zoom-in-95 data-[side=bottom]:slide-in-from-top-2"
+          className="animate-in fade-in-0 zoom-in-95 data-[side=bottom]:slide-in-from-top-2 z-50 w-48 overflow-hidden rounded-lg border border-gray-200 bg-white py-2 shadow-lg dark:border-gray-700 dark:bg-gray-800"
         >
-          <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+          <div className="border-b border-gray-200 px-4 py-2 dark:border-gray-700">
             <p className="text-sm font-semibold">{user.name}</p>
-            <p className="text-xs text-gray-500 truncate">{user.email}</p>
+            <p className="truncate text-xs text-gray-500">{user.email}</p>
           </div>
 
           {user.role === 'admin' && (
             <DropdownMenu.Item asChild>
               <a
                 href="/admin"
-                className="flex items-center px-4 py-2 text-sm text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors outline-none cursor-pointer focus:bg-gray-100 dark:focus:bg-gray-700"
+                className="flex cursor-pointer items-center px-4 py-2 text-sm text-gray-900 transition-colors outline-none hover:bg-gray-100 focus:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700"
               >
                 관리자 페이지
               </a>
@@ -60,7 +60,7 @@ export function UserDropdown({ user }: UserDropdownProps) {
           <DropdownMenu.Item asChild>
             <button
               onClick={() => signOut()}
-              className="flex w-full items-center px-4 py-2 text-sm text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors outline-none cursor-pointer focus:bg-gray-100 dark:focus:bg-gray-700"
+              className="flex w-full cursor-pointer items-center px-4 py-2 text-sm text-gray-900 transition-colors outline-none hover:bg-gray-100 focus:bg-gray-100 dark:text-gray-100 dark:hover:bg-gray-700 dark:focus:bg-gray-700"
             >
               로그아웃
             </button>

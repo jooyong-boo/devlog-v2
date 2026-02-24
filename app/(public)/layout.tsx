@@ -12,7 +12,7 @@ export default function PublicLayout({
     <SessionProvider>
       <Suspense
         fallback={
-          <header className="border-b border-gray-200 dark:border-gray-700 sticky top-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm z-50 h-16" />
+          <header className="sticky top-0 z-50 h-16 border-b border-gray-200 bg-white/80 backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/80" />
         }
       >
         <Header />

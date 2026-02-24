@@ -107,9 +107,9 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
   ];
 
   return (
-    <div className="border-b border-gray-200 dark:border-gray-700 p-2 flex gap-4 flex-wrap bg-gray-50 dark:bg-gray-800">
+    <div className="flex flex-wrap gap-4 border-b border-gray-200 bg-gray-50 p-2 dark:border-gray-700 dark:bg-gray-800">
       {toolbarGroups.map((group, groupIndex) => (
-        <div key={groupIndex} className="flex gap-1 items-center">
+        <div key={groupIndex} className="flex items-center gap-1">
           {group.buttons.map((button, buttonIndex) => (
             <Button
               key={buttonIndex}
@@ -123,7 +123,7 @@ export function EditorToolbar({ editor }: EditorToolbarProps) {
             </Button>
           ))}
           {groupIndex < toolbarGroups.length - 1 && (
-            <div className="w-px h-6 bg-gray-300 dark:bg-gray-600 mx-1" />
+            <div className="mx-1 h-6 w-px bg-gray-300 dark:bg-gray-600" />
           )}
         </div>
       ))}

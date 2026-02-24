@@ -34,12 +34,12 @@ async function PostsTable() {
           {posts.map((post) => (
             <tr
               key={post.id}
-              className="border-b last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              className="border-b transition-colors last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-800"
             >
               <td className="px-4 py-3">
                 <Link
                   href={`/posts/${post.id}`}
-                  className="font-medium hover:text-blue-600 transition-colors"
+                  className="font-medium transition-colors hover:text-blue-600"
                 >
                   {post.title}
                 </Link>
@@ -92,7 +92,7 @@ export default function AdminPostsPage() {
       </div>
       <Suspense
         fallback={
-          <div className="h-64 animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg" />
+          <div className="h-64 animate-pulse rounded-lg bg-gray-100 dark:bg-gray-800" />
         }
       >
         <PostsTable />

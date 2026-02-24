@@ -34,10 +34,10 @@ export function PostSortTabs() {
           onClick={() => handleSortChange(option.value)}
           aria-pressed={currentSort === option.value}
           className={cn(
-            'px-4 py-1.5 rounded-full text-sm font-medium transition-colors',
+            'rounded-full px-4 py-1.5 text-sm font-medium transition-colors',
             currentSort === option.value
               ? 'bg-blue-600 text-white'
-              : 'border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-blue-400 hover:text-blue-600'
+              : 'border border-gray-300 text-gray-600 hover:border-blue-400 hover:text-blue-600 dark:border-gray-600 dark:text-gray-400'
           )}
         >
           {option.label}

@@ -60,8 +60,8 @@ export async function Sidebar() {
       <Card variant="bordered" padding="lg">
         <div className="flex flex-col items-center text-center">
           <Avatar alt={siteConfig.author.name} size="lg" />
-          <h3 className="text-lg font-bold mt-3">{siteConfig.author.name}</h3>
-          <p className="text-sm text-gray-500 mt-1">{siteConfig.description}</p>
+          <h3 className="mt-3 text-lg font-bold">{siteConfig.author.name}</h3>
+          <p className="mt-1 text-sm text-gray-500">{siteConfig.description}</p>
           <a
             href={siteConfig.links.github}
             target="_blank"
@@ -76,7 +76,7 @@ export async function Sidebar() {
       {/* 인기 태그 */}
       {tags.length > 0 && (
         <Card variant="bordered" padding="lg">
-          <h3 className="text-lg font-bold mb-4">인기 태그</h3>
+          <h3 className="mb-4 text-lg font-bold">인기 태그</h3>
           <div className="flex flex-wrap gap-2">
             {tags.map((tag) => (
               <Link key={tag.id} href={`/tags/${tag.name}`}>
@@ -92,15 +92,15 @@ export async function Sidebar() {
       {/* 시리즈 */}
       {seriesList.length > 0 && (
         <Card variant="bordered" padding="lg">
-          <h3 className="text-lg font-bold mb-4">시리즈</h3>
+          <h3 className="mb-4 text-lg font-bold">시리즈</h3>
           <ul className="space-y-3">
             {seriesList.map((series) => (
               <li key={series.id}>
                 <Link
                   href={`/series/${series.id}`}
-                  className="flex items-center justify-between hover:text-blue-600 transition-colors"
+                  className="flex items-center justify-between transition-colors hover:text-blue-600"
                 >
-                  <span className="text-sm font-medium truncate">
+                  <span className="truncate text-sm font-medium">
                     {series.title}
                   </span>
                   <Badge variant="default" size="sm">

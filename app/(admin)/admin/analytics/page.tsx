@@ -17,7 +17,7 @@ async function ViewTrends() {
 
   return (
     <Card variant="bordered" padding="lg">
-      <h2 className="text-lg font-semibold mb-4">최근 30일 조회수 추이</h2>
+      <h2 className="mb-4 text-lg font-semibold">최근 30일 조회수 추이</h2>
       {trends.length === 0 ? (
         <p className="text-gray-500">아직 조회수 데이터가 없습니다.</p>
       ) : (
@@ -27,12 +27,12 @@ async function ViewTrends() {
               key={trend.viewDate.toISOString()}
               className="flex items-center gap-4"
             >
-              <span className="text-sm text-gray-500 w-24">
+              <span className="w-24 text-sm text-gray-500">
                 {trend.viewDate.toLocaleDateString()}
               </span>
-              <div className="flex-1 bg-gray-100 dark:bg-gray-700 rounded-full h-4">
+              <div className="h-4 flex-1 rounded-full bg-gray-100 dark:bg-gray-700">
                 <div
-                  className="bg-blue-600 h-4 rounded-full"
+                  className="h-4 rounded-full bg-blue-600"
                   style={{
                     width: `${Math.min(
                       ((trend._sum.viewCount || 0) /
@@ -43,7 +43,7 @@ async function ViewTrends() {
                   }}
                 />
               </div>
-              <span className="text-sm font-medium w-12 text-right">
+              <span className="w-12 text-right text-sm font-medium">
                 {trend._sum.viewCount}
               </span>
             </div>
@@ -69,7 +69,7 @@ async function TopPosts() {
 
   return (
     <Card variant="bordered" padding="lg">
-      <h2 className="text-lg font-semibold mb-4">인기 게시글 Top 10</h2>
+      <h2 className="mb-4 text-lg font-semibold">인기 게시글 Top 10</h2>
       {topPosts.length === 0 ? (
         <p className="text-gray-500">아직 게시글이 없습니다.</p>
       ) : (
@@ -78,7 +78,7 @@ async function TopPosts() {
             <tr className="border-b text-left">
               <th className="pb-2 font-medium">#</th>
               <th className="pb-2 font-medium">제목</th>
-              <th className="pb-2 font-medium text-right">조회수</th>
+              <th className="pb-2 text-right font-medium">조회수</th>
             </tr>
           </thead>
           <tbody>
@@ -88,7 +88,7 @@ async function TopPosts() {
                 className="border-b border-gray-100 dark:border-gray-700"
               >
                 <td className="py-2 text-gray-500">{index + 1}</td>
-                <td className="py-2 truncate max-w-md">{post.title}</td>
+                <td className="max-w-md truncate py-2">{post.title}</td>
                 <td className="py-2 text-right font-medium">
                   {post.viewCount.toLocaleString()}
                 </td>
@@ -107,14 +107,14 @@ export default function AdminAnalyticsPage() {
       <h1 className="text-3xl font-bold">Analytics</h1>
       <Suspense
         fallback={
-          <div className="h-48 animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg" />
+          <div className="h-48 animate-pulse rounded-lg bg-gray-100 dark:bg-gray-800" />
         }
       >
         <ViewTrends />
       </Suspense>
       <Suspense
         fallback={
-          <div className="h-48 animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg" />
+          <div className="h-48 animate-pulse rounded-lg bg-gray-100 dark:bg-gray-800" />
         }
       >
         <TopPosts />

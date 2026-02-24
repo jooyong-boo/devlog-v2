@@ -42,7 +42,7 @@ export function PostFilter({ projects = [] }: PostFilterProps) {
   ];
 
   return (
-    <div className="flex gap-4 items-center justify-between flex-wrap">
+    <div className="flex flex-wrap items-center justify-between gap-4">
       <PostSortTabs />
 
       <div className="flex gap-4">

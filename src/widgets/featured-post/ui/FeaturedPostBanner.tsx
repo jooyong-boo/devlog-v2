@@ -19,21 +19,21 @@ export async function FeaturedPostBanner() {
   const excerpt = fullText.slice(0, 150);
 
   return (
-    <div className="rounded-xl overflow-hidden mb-8 bg-[#101622]">
+    <div className="mb-8 overflow-hidden rounded-xl bg-[#101622]">
       <div className="flex flex-col md:flex-row">
-        <div className="flex-1 p-8 md:p-10 flex flex-col justify-center">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-blue-600 text-white mb-4 w-fit">
+        <div className="flex flex-1 flex-col justify-center p-8 md:p-10">
+          <span className="mb-4 inline-block w-fit rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white">
             {post.project.name}
           </span>
 
           <Link href={`/posts/${post.id}`}>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 hover:text-blue-400 transition-colors line-clamp-2">
+            <h2 className="mb-3 line-clamp-2 text-2xl font-bold text-white transition-colors hover:text-blue-400 md:text-3xl">
               {post.title}
             </h2>
           </Link>
 
           {excerpt && (
-            <p className="text-gray-400 text-sm mb-6 line-clamp-2">
+            <p className="mb-6 line-clamp-2 text-sm text-gray-400">
               {excerpt}
               {fullText.length > 150 ? '...' : ''}
             </p>
@@ -41,19 +41,19 @@ export async function FeaturedPostBanner() {
 
           <Link
             href={`/posts/${post.id}`}
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors w-fit"
+            className="inline-flex w-fit items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
           >
             Read Full Guide
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="h-4 w-4" />
           </Link>
 
-          <div className="flex items-center gap-4 mt-6 text-gray-500 text-xs">
+          <div className="mt-6 flex items-center gap-4 text-xs text-gray-500">
             <span className="flex items-center gap-1">
-              <Clock className="w-3 h-3" />
+              <Clock className="h-3 w-3" />
               {post.readingTime}분 읽기
             </span>
             <span className="flex items-center gap-1">
-              <Eye className="w-3 h-3" />
+              <Eye className="h-3 w-3" />
               {post.viewCount.toLocaleString()} views
             </span>
             <span>{post.user.nickname}</span>

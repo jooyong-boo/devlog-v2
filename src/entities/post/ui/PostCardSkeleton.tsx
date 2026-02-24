@@ -2,9 +2,9 @@ import { Skeleton } from '@/shared/ui/skeleton';
 
 export function PostCardSkeleton() {
   return (
-    <div className="flex flex-col overflow-hidden rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+    <div className="flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
       <Skeleton variant="rectangular" height={192} />
-      <div className="p-6 space-y-3">
+      <div className="space-y-3 p-6">
         <div className="flex gap-2">
           <Skeleton variant="rectangular" width={80} height={24} />
           <Skeleton variant="text" width={60} />

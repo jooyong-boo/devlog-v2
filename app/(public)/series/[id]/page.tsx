@@ -62,23 +62,23 @@ async function SeriesDetailContent({
   if (!series) notFound();
 
   return (
-    <div className="container mx-auto px-4 py-8 animate-fade-in">
+    <div className="animate-fade-in container mx-auto px-4 py-8">
       <header className="mb-8">
         <h1 className="text-3xl font-bold">{series.title}</h1>
         {series.description && (
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
             {series.description}
           </p>
         )}
-        <p className="text-sm text-gray-500 mt-2">
+        <p className="mt-2 text-sm text-gray-500">
           {series.posts.length}개의 글
         </p>
       </header>
 
       <div className="space-y-4">
         {series.posts.map((post, index) => (
-          <div key={post.id} className="flex gap-4 items-start">
-            <span className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-bold">
+          <div key={post.id} className="flex items-start gap-4">
+            <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
               {index + 1}
             </span>
             <div className="flex-1">
@@ -96,7 +96,7 @@ export default function SeriesDetailPage({ params }: SeriesDetailPageProps) {
     <Suspense
       fallback={
         <div className="container mx-auto px-4 py-8">
-          <div className="h-96 animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg" />
+          <div className="h-96 animate-pulse rounded-lg bg-gray-100 dark:bg-gray-800" />
         </div>
       }
     >

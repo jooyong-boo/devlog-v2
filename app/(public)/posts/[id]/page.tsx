@@ -26,7 +26,7 @@ async function PostDetailContent({
       <ViewCounter postId={post.id} />
       <PostContent post={post} />
 
-      <div className="max-w-4xl mx-auto mt-12">
+      <div className="mx-auto mt-12 max-w-4xl">
         <Suspense
           fallback={
             <div className="py-8 text-center text-gray-400">
@@ -46,7 +46,7 @@ export default function PostDetailPage({ params }: PostDetailPageProps) {
     <Suspense
       fallback={
         <div className="container mx-auto px-4 py-8">
-          <div className="h-96 animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg" />
+          <div className="h-96 animate-pulse rounded-lg bg-gray-100 dark:bg-gray-800" />
         </div>
       }
     >

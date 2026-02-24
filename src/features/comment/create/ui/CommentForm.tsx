@@ -31,7 +31,7 @@ export function CommentForm({ postId, parentId, onSuccess }: CommentFormProps) {
 
   if (!session) {
     return (
-      <div className="text-center py-8 text-gray-600 dark:text-gray-400">
+      <div className="py-8 text-center text-gray-600 dark:text-gray-400">
         댓글을 작성하려면 로그인이 필요합니다.
       </div>
     );

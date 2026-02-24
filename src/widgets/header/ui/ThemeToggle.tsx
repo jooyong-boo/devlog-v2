@@ -28,11 +28,11 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-pressed={isDark}
-      className="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors"
+      className="text-gray-600 transition-colors hover:text-blue-600 dark:text-gray-300"
       aria-label={isDark ? '라이트 모드로 전환' : '다크 모드로 전환'}
       title={isDark ? '라이트 모드' : '다크 모드'}
     >
-      {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+      {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
     </button>
   );
 }
