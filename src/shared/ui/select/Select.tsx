@@ -71,6 +71,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       },
       [onValueChange, EMPTY_VALUE_SENTINEL]
     );
+    const normalizedValue = value === '' ? EMPTY_VALUE_SENTINEL : value;
 
     return (
       <div className="w-full">
@@ -89,7 +90,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
         )}
 
         <RadixSelect.Root
-          value={value}
+          value={normalizedValue}
           onValueChange={handleValueChange}
           disabled={disabled}
           required={required}
