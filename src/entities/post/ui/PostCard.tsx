@@ -43,7 +43,7 @@ export function PostCard({ post, layout = 'grid' }: PostCardProps) {
   return (
     <article
       className={cn(
-        'flex overflow-hidden rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 transition-all hover:shadow-lg hover:-translate-y-1',
+        'flex overflow-hidden rounded-lg border border-gray-200 bg-white transition-all hover:-translate-y-1 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800',
         isGrid ? 'flex-col' : 'flex-row items-center'
       )}
     >
@@ -51,7 +51,7 @@ export function PostCard({ post, layout = 'grid' }: PostCardProps) {
         <div
           className={cn(
             'relative bg-gray-100 dark:bg-gray-700',
-            isGrid ? 'h-48 w-full' : 'w-48 h-32'
+            isGrid ? 'h-48 w-full' : 'h-32 w-48'
           )}
         >
           {post.thumbnail ? (
@@ -63,15 +63,15 @@ export function PostCard({ post, layout = 'grid' }: PostCardProps) {
               className="object-cover"
             />
           ) : (
-            <div className="flex items-center justify-center h-full text-gray-400">
-              <ImageIcon className="w-12 h-12" strokeWidth={1.5} />
+            <div className="flex h-full items-center justify-center text-gray-400">
+              <ImageIcon className="h-12 w-12" strokeWidth={1.5} />
             </div>
           )}
         </div>
       </Link>
 
       <div className="flex-1 p-6">
-        <div className="flex items-center gap-2 mb-3 flex-wrap">
+        <div className="mb-3 flex flex-wrap items-center gap-2">
           <Badge variant="primary">{post.project.name}</Badge>
           <span className="text-sm text-gray-500">
             {post.readingTime}분 읽기
@@ -82,12 +82,12 @@ export function PostCard({ post, layout = 'grid' }: PostCardProps) {
         </div>
 
         <Link href={`/posts/${post.id}`}>
-          <h3 className="text-xl font-bold mb-2 hover:text-blue-600 transition-colors line-clamp-2">
+          <h3 className="mb-2 line-clamp-2 text-xl font-bold transition-colors hover:text-blue-600">
             {post.title}
           </h3>
         </Link>
 
-        <div className="flex items-center gap-2 mb-3">
+        <div className="mb-3 flex items-center gap-2">
           <Avatar src={post.user.profile} alt={post.user.nickname} size="sm" />
           <span className="text-sm text-gray-600 dark:text-gray-400">
             {post.user.nickname}
@@ -98,7 +98,7 @@ export function PostCard({ post, layout = 'grid' }: PostCardProps) {
         </div>
 
         {isGrid && excerpt && (
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">
+          <p className="mb-3 line-clamp-2 text-sm text-gray-500 dark:text-gray-400">
             {excerpt}
           </p>
         )}
@@ -117,10 +117,10 @@ export function PostCard({ post, layout = 'grid' }: PostCardProps) {
           {isGrid && (
             <Link
               href={`/posts/${post.id}`}
-              className="flex items-center gap-1 text-sm text-blue-600 hover:text-blue-700 font-medium shrink-0 ml-2"
+              className="ml-2 flex shrink-0 items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700"
             >
               Read more
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="h-4 w-4" />
             </Link>
           )}
         </div>

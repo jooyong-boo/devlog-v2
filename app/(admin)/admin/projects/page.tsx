@@ -97,10 +97,10 @@ export default function AdminProjectsPage() {
 
   return (
     <div className="max-w-2xl">
-      <h1 className="text-3xl font-bold mb-8">프로젝트 관리</h1>
+      <h1 className="mb-8 text-3xl font-bold">프로젝트 관리</h1>
 
       <Card variant="bordered" padding="lg" className="mb-8">
-        <h2 className="text-lg font-semibold mb-4">새 프로젝트 추가</h2>
+        <h2 className="mb-4 text-lg font-semibold">새 프로젝트 추가</h2>
         <form onSubmit={handleCreate} className="space-y-4">
           <Input
             label="프로젝트 이름"
@@ -154,7 +154,7 @@ export default function AdminProjectsPage() {
                   <div>
                     <h3 className="font-semibold">{project.name}</h3>
                     <p className="text-sm text-gray-500">{project.desc}</p>
-                    <p className="text-xs text-gray-400 mt-1">
+                    <p className="mt-1 text-xs text-gray-400">
                       {project._count.posts}개의 글
                     </p>
                   </div>

@@ -44,20 +44,20 @@ export function PostListWidget({
 
   if (posts.length === 0) {
     return (
-      <div className="text-center py-20 text-gray-500 dark:text-gray-400">
+      <div className="py-20 text-center text-gray-500 dark:text-gray-400">
         <FileText
-          className="w-16 h-16 mx-auto mb-4 text-gray-300 dark:text-gray-600"
+          className="mx-auto mb-4 h-16 w-16 text-gray-300 dark:text-gray-600"
           strokeWidth={1.5}
         />
         <p className="text-lg font-medium">아직 게시글이 없습니다</p>
-        <p className="text-sm mt-1">첫 번째 게시글을 작성해보세요!</p>
+        <p className="mt-1 text-sm">첫 번째 게시글을 작성해보세요!</p>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {posts.map((post, index) => (
           <div
             key={post.id}
@@ -84,7 +84,7 @@ export function PostListWidget({
 
 export function PostListSkeleton() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
       {Array.from({ length: 4 }).map((_, i) => (
         <PostCardSkeleton key={i} />
       ))}

@@ -33,13 +33,13 @@ async function DashboardStats() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
       {statCards.map((stat) => (
         <Card key={stat.title} variant="bordered" padding="lg">
           <p className="text-sm text-gray-600 dark:text-gray-400">
             {stat.title}
           </p>
-          <p className="text-3xl font-bold mt-2">
+          <p className="mt-2 text-3xl font-bold">
             {stat.value.toLocaleString()}
           </p>
         </Card>
@@ -54,11 +54,11 @@ export default function AdminDashboard() {
       <h1 className="text-3xl font-bold">Dashboard</h1>
       <Suspense
         fallback={
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
             {Array.from({ length: 5 }).map((_, i) => (
               <div
                 key={i}
-                className="h-24 animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg"
+                className="h-24 animate-pulse rounded-lg bg-gray-100 dark:bg-gray-800"
               />
             ))}
           </div>

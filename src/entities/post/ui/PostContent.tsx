@@ -25,13 +25,13 @@ interface PostContentProps {
 
 export function PostContent({ post }: PostContentProps) {
   return (
-    <article className="max-w-4xl mx-auto animate-fade-in">
+    <article className="animate-fade-in mx-auto max-w-4xl">
       <header className="mb-8">
-        <div className="flex items-center gap-2 mb-4">
+        <div className="mb-4 flex items-center gap-2">
           <Badge variant="primary">{post.project.name}</Badge>
         </div>
 
-        <h1 className="text-4xl font-bold mb-4 animate-slide-in-up">
+        <h1 className="animate-slide-in-up mb-4 text-4xl font-bold">
           {post.title}
         </h1>
 
@@ -51,7 +51,7 @@ export function PostContent({ post }: PostContentProps) {
       </header>
 
       <div
-        className="prose prose-lg dark:prose-invert max-w-none mb-8"
+        className="prose prose-lg dark:prose-invert mb-8 max-w-none"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
 

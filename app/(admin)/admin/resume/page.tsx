@@ -16,10 +16,10 @@ async function ResumeContent() {
 export default function AdminResumePage() {
   return (
     <div className="max-w-4xl">
-      <h1 className="text-3xl font-bold mb-8">Resume 관리</h1>
+      <h1 className="mb-8 text-3xl font-bold">Resume 관리</h1>
       <Suspense
         fallback={
-          <div className="h-96 animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg" />
+          <div className="h-96 animate-pulse rounded-lg bg-gray-100 dark:bg-gray-800" />
         }
       >
         <ResumeContent />

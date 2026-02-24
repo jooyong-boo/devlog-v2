@@ -61,10 +61,10 @@ export default function EditPostPage({
 }) {
   return (
     <div className="max-w-4xl">
-      <h1 className="text-3xl font-bold mb-8">게시글 수정</h1>
+      <h1 className="mb-8 text-3xl font-bold">게시글 수정</h1>
       <Suspense
         fallback={
-          <div className="h-96 animate-pulse bg-gray-100 dark:bg-gray-800 rounded-lg" />
+          <div className="h-96 animate-pulse rounded-lg bg-gray-100 dark:bg-gray-800" />
         }
       >
         <EditPostContent params={params} />

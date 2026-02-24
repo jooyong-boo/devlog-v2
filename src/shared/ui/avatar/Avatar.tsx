@@ -29,7 +29,7 @@ export const Avatar: React.FC<AvatarProps> = ({
   return (
     <RadixAvatar.Root
       className={cn(
-        'relative inline-flex items-center justify-center rounded-full overflow-hidden',
+        'relative inline-flex items-center justify-center overflow-hidden rounded-full',
         'bg-gray-200 dark:bg-gray-700',
         sizeClasses[size],
         className
@@ -38,10 +38,10 @@ export const Avatar: React.FC<AvatarProps> = ({
       <RadixAvatar.Image
         src={src}
         alt={alt}
-        className="w-full h-full object-cover"
+        className="h-full w-full object-cover"
       />
       <RadixAvatar.Fallback
-        className="flex items-center justify-center w-full h-full font-medium text-gray-600 dark:text-gray-300"
+        className="flex h-full w-full items-center justify-center font-medium text-gray-600 dark:text-gray-300"
         delayMs={300}
       >
         {fallbackText}

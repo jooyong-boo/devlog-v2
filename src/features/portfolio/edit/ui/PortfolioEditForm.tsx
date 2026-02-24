@@ -56,18 +56,18 @@ export function PortfolioEditForm({
           }
         />
         {errors.content && (
-          <p className="text-sm text-red-500 mt-1" role="alert">
+          <p className="mt-1 text-sm text-red-500" role="alert">
             {errors.content.message}
           </p>
         )}
       </div>
 
       <div className="flex items-center gap-4">
-        <label className="flex items-center gap-2 cursor-pointer">
+        <label className="flex cursor-pointer items-center gap-2">
           <input
             {...register('isPublished')}
             type="checkbox"
-            className="w-4 h-4 rounded"
+            className="h-4 w-4 rounded"
           />
           <span className="text-sm">발행 (공개 페이지에 표시)</span>
         </label>
