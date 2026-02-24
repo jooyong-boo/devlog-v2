@@ -1,7 +1,16 @@
 import { z } from 'zod';
 
 export const portfolioEditSchema = z.object({
-  content: z.string().trim().min(1, { error: '내용을 입력하세요' }),
+  content: z.string().refine(
+    (val) =>
+      val
+        .replace(/<[^>]*>/g, '')
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&#160;/g, ' ')
+        .replace(/&[#\w]+;/g, '')
+        .trim().length > 0,
+    '내용을 입력하세요'
+  ),
   isPublished: z.boolean(),
 });
 

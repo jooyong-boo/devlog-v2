@@ -49,4 +49,15 @@ describe('portfolioEditSchema', () => {
       expect(result.error.issues[0].message).toBe('내용을 입력하세요');
     }
   });
+
+  it('TipTap 빈 에디터 HTML("<p></p>")은 실패해야 한다', () => {
+    const result = portfolioEditSchema.safeParse({
+      content: '<p></p>',
+      isPublished: false,
+    });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues[0].message).toBe('내용을 입력하세요');
+    }
+  });
 });
