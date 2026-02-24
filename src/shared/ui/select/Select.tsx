@@ -44,6 +44,33 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
     ref
   ) => {
     const selectId = id || label?.toLowerCase().replace(/\s+/g, '-');
+    const EMPTY_VALUE_SENTINEL = React.useMemo(() => {
+      let sentinel = '__radix-select-empty__';
+      const values = new Set(options.map((option) => option.value));
+      while (values.has(sentinel)) {
+        sentinel += '_';
+      }
+      return sentinel;
+    }, [options]);
+
+    const normalizedOptions = React.useMemo(
+      () =>
+        options.map((option, index) => ({
+          ...option,
+          internalValue:
+            option.value === '' ? EMPTY_VALUE_SENTINEL : option.value,
+          key: `${option.value || '__empty__'}-${index}`,
+        })),
+      [options, EMPTY_VALUE_SENTINEL]
+    );
+
+    const handleValueChange = React.useCallback(
+      (nextValue: string) => {
+        if (!onValueChange) return;
+        onValueChange(nextValue === EMPTY_VALUE_SENTINEL ? '' : nextValue);
+      },
+      [onValueChange, EMPTY_VALUE_SENTINEL]
+    );
 
     return (
       <div className="w-full">
@@ -63,7 +90,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
 
         <RadixSelect.Root
           value={value}
-          onValueChange={onValueChange}
+          onValueChange={handleValueChange}
           disabled={disabled}
           required={required}
         >
@@ -84,7 +111,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
               'text-gray-900 dark:text-gray-100',
               'focus:border-transparent focus:ring-2 focus:ring-blue-600 focus:outline-none',
               'disabled:cursor-not-allowed disabled:opacity-50',
-              'data-[placeholder]:text-gray-400 dark:data-[placeholder]:text-gray-500',
+              'data-placeholder:text-gray-400 dark:data-placeholder:text-gray-500',
               error
                 ? 'border-red-500 focus:ring-red-500'
                 : 'border-gray-300 dark:border-gray-600',
@@ -103,7 +130,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
           <RadixSelect.Portal>
             <RadixSelect.Content
               className={cn(
-                'z-50 min-w-[8rem] overflow-hidden rounded-lg border shadow-md',
+                'z-50 min-w-32 overflow-hidden rounded-lg border shadow-md',
                 'bg-white dark:bg-gray-800',
                 'border-gray-200 dark:border-gray-700',
                 'animate-in fade-in-0 zoom-in-95'
@@ -116,16 +143,16 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
               </RadixSelect.ScrollUpButton>
 
               <RadixSelect.Viewport className="p-1">
-                {options.map((option) => (
+                {normalizedOptions.map((option) => (
                   <RadixSelect.Item
-                    key={option.value}
-                    value={option.value}
+                    key={option.key}
+                    value={option.internalValue}
                     disabled={option.disabled}
                     className={cn(
                       'relative flex cursor-pointer items-center rounded-md px-3 py-2 text-sm outline-none select-none',
                       'text-gray-900 dark:text-gray-100',
                       'focus:bg-blue-50 focus:text-blue-600 dark:focus:bg-blue-900/20 dark:focus:text-blue-400',
-                      'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-50',
+                      'data-disabled:cursor-not-allowed data-disabled:opacity-50',
                       'data-[state=checked]:font-medium'
                     )}
                   >
