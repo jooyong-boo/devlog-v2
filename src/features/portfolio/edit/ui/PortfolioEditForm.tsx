@@ -9,7 +9,7 @@ import { upsertPortfolio } from '@/entities/portfolio/api/mutations';
 import {
   portfolioEditSchema,
   type PortfolioEditFormData,
-} from '../model/schema';
+} from '@/features/portfolio/edit/model/schema';
 
 interface PortfolioEditFormProps {
   initialContent: string;
@@ -27,7 +27,6 @@ export function PortfolioEditForm({
     handleSubmit,
     formState: { errors, isSubmitting },
     setValue,
-    watch,
   } = useForm<PortfolioEditFormData>({
     resolver: zodResolver(portfolioEditSchema),
     defaultValues: {
@@ -35,8 +34,6 @@ export function PortfolioEditForm({
       isPublished: initialIsPublished,
     },
   });
-
-  const content = watch('content');
 
   const onSubmit = async (data: PortfolioEditFormData) => {
     const result = await upsertPortfolio(data.content, data.isPublished);
@@ -53,7 +50,7 @@ export function PortfolioEditForm({
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div>
         <TiptapEditor
-          content={content}
+          content={initialContent}
           onChange={(html) =>
             setValue('content', html, { shouldValidate: true })
           }

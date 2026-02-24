@@ -10,6 +10,9 @@ describe('newsletterSchema', () => {
   it('이메일이 비어있으면 실패해야 한다', () => {
     const result = newsletterSchema.safeParse({ email: '' });
     expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues[0].message).toBe('이메일을 입력해주세요.');
+    }
   });
 
   it('올바르지 않은 이메일 형식이면 실패해야 한다', () => {
