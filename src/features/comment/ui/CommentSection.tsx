@@ -1,8 +1,7 @@
 import { prisma } from '@/shared/lib/prisma';
-import { CommentCard } from '@/entities/comment/ui/CommentCard';
 import { CommentForm } from '../create/ui/CommentForm';
-import { DeleteCommentButton } from '../delete/ui/DeleteCommentButton';
 import { auth } from '@/shared/lib/auth';
+import { CommentCardWithDelete } from './CommentCardWithDelete';
 
 interface CommentSectionProps {
   postId: string;
@@ -60,12 +59,9 @@ export async function CommentSection({ postId }: CommentSectionProps) {
 
       <div className="space-y-6">
         {comments.map((comment) => (
-          <CommentCard
+          <CommentCardWithDelete
             key={comment.id}
             isAdmin={isAdmin}
-            deleteSlot={(commentId) => (
-              <DeleteCommentButton commentId={commentId} />
-            )}
             comment={{
               ...comment,
               user: {
