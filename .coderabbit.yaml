@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: 'ko-KR'
+tone_instructions: '리뷰와 제안은 한국어로, 간결하고 실행 가능한 형태로 작성하세요.'
+early_access: false
+enable_free_tier: true
+
+reviews:
+  profile: 'assertive'
+  high_level_summary: true
+  high_level_summary_in_walkthrough: false
+  review_status: true
+  commit_status: true
+  collapse_walkthrough: false
+  poem: false
+  changed_files_summary: true
+  sequence_diagrams: false
+  estimate_code_review_effort: true
+  path_filters:
+    - '!pnpm-lock.yaml'
+    - '!**/.next/**'
+    - '!**/dist/**'
+    - '!**/*.snap'
+  path_instructions:
+    - path: 'src/**/*.{ts,tsx}'
+      instructions: |
+        FSD import 방향(app -> widgets -> features -> entities -> shared) 위반을 우선 확인하세요.
+        TypeScript strict 모드 기준의 타입 안정성, null/undefined 처리 누락을 점검하세요.
+        Next.js App Router와 React Client/Server 경계(use client), 하이드레이션 이슈를 확인하세요.
+    - path: '**/__tests__/**/*.{ts,tsx}'
+      instructions: |
+        테스트가 실제 회귀를 잡는지 검토하고, 취약한 단언/과도한 mock 사용을 지적하세요.
+    - path: 'prisma/**/*.{prisma,ts}'
+      instructions: |
+        스키마 변경 시 relation 무결성, 인덱스/unique 제약, 마이그레이션 안전성을 점검하세요.
+  auto_review:
+    enabled: true
+    drafts: false
+    auto_incremental_review: true
+    base_branches:
+      - 'main'
+    ignore_title_keywords:
+      - 'WIP'
+      - '[skip review]'
+
+chat:
+  auto_reply: true

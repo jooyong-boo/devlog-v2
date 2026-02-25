@@ -43,11 +43,12 @@ export function TiptapEditor({ content, onChange }: TiptapEditorProps) {
           'prose prose-lg dark:prose-invert max-w-none p-4 min-h-[400px] focus:outline-none',
       },
     },
+    immediatelyRender: false,
   });
 
   if (!editor) {
     return (
-      <div className="flex h-[450px] items-center justify-center rounded-lg border text-gray-400">
+      <div className="flex h-112.5 items-center justify-center rounded-lg border text-gray-400">
         에디터 로딩 중...
       </div>
     );
