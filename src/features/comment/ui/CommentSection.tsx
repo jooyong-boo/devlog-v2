@@ -1,7 +1,7 @@
-import { prisma } from '@/shared/lib/prisma';
-import { CommentForm } from '../create/ui/CommentForm';
+import { CommentForm } from '@/features/comment/create/ui/CommentForm';
+import { CommentCardWithDelete } from '@/features/comment/ui/CommentCardWithDelete';
 import { auth } from '@/shared/lib/auth';
-import { CommentCardWithDelete } from './CommentCardWithDelete';
+import { prisma } from '@/shared/lib/prisma';
 
 interface CommentSectionProps {
   postId: string;
