@@ -1,1 +1,8 @@
-export type { Post, PostListParams, PostListResult } from './model/types';
+export type {
+  Post,
+  PostListParams,
+  PostListResult,
+  SeriesQueryUser,
+  SeriesQueryPost,
+  SeriesQueryResult,
+} from './model/types';

@@ -7,6 +7,8 @@ vi.mock('@radix-ui/react-select', async () => {
   type SelectContextValue = {
     onValueChange?: (value: string) => void;
     disabled?: boolean;
+    open?: boolean;
+    expanded?: boolean;
   };
 
   const SelectContext = React.createContext<SelectContextValue>({});
@@ -15,8 +17,10 @@ vi.mock('@radix-ui/react-select', async () => {
     children,
     onValueChange,
     disabled,
+    open,
+    expanded,
   }: React.PropsWithChildren<SelectContextValue>) => (
-    <SelectContext.Provider value={{ onValueChange, disabled }}>
+    <SelectContext.Provider value={{ onValueChange, disabled, open, expanded }}>
       {children}
     </SelectContext.Provider>
   );
@@ -25,9 +29,15 @@ vi.mock('@radix-ui/react-select', async () => {
     HTMLButtonElement,
     React.ComponentPropsWithoutRef<'button'>
   >(({ children, ...props }, ref) => {
-    const { disabled } = React.useContext(SelectContext);
+    const { disabled, open, expanded } = React.useContext(SelectContext);
     return (
-      <button ref={ref} role="combobox" disabled={disabled} {...props}>
+      <button
+        ref={ref}
+        role="combobox"
+        disabled={disabled}
+        {...props}
+        aria-expanded={Boolean(open ?? expanded ?? false)}
+      >
         {children}
       </button>
     );

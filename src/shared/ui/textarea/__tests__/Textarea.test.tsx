@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Textarea } from '../Textarea';
+import { Textarea } from '@/shared/ui/textarea/Textarea';
 
 describe('<Textarea />', () => {
   it('textarea를 렌더링해야 한다', () => {

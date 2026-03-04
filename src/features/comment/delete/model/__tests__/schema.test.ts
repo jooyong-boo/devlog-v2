@@ -7,8 +7,8 @@ describe('deleteCommentSchema', () => {
     expect(result.success).toBe(true);
   });
 
-  it('0 이하 숫자는 거부해야 한다', () => {
-    const result = deleteCommentSchema.safeParse({ commentId: 0 });
+  it.each([0, -1])('0 이하 숫자(%d)는 거부해야 한다', (commentId) => {
+    const result = deleteCommentSchema.safeParse({ commentId });
     expect(result.success).toBe(false);
   });
 

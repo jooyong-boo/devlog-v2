@@ -3,7 +3,7 @@ import {
   buildSeriesMetadata,
   normalizeSeriesWithPosts,
   parseSeriesId,
-} from '../series-page';
+} from '@/entities/post/lib/series-page';
 
 describe('series-page helpers', () => {
   describe('parseSeriesId', () => {
@@ -13,6 +13,14 @@ describe('series-page helpers', () => {
 
     it('숫자가 아닌 값은 null을 반환해야 한다', () => {
       expect(parseSeriesId('abc')).toBeNull();
+    });
+
+    it('숫자 접두어가 있는 문자열은 null을 반환해야 한다', () => {
+      expect(parseSeriesId('12abc')).toBeNull();
+    });
+
+    it('소수 문자열은 null을 반환해야 한다', () => {
+      expect(parseSeriesId('12.3')).toBeNull();
     });
   });
 

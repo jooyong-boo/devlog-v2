@@ -14,7 +14,7 @@ export default defineConfig({
       include: [
         'src/shared/lib/**/*.{ts,tsx}',
         'src/shared/ui/**/*.{ts,tsx}',
-        'src/entities/post/ui/**/*.{ts,tsx}',
+        'src/entities/post/**/*.{ts,tsx}',
         'src/entities/comment/ui/**/*.{ts,tsx}',
         'src/features/**/model/**/*.ts',
       ],

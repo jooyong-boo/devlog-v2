@@ -1,34 +1,11 @@
-type SeriesQueryUser = {
-  id: string;
-  name: string | null;
-  nickname: string | null;
-  profile: string | null;
-  image: string | null;
-};
-
-type SeriesQueryPost = {
-  id: string;
-  title: string;
-  content: string;
-  thumbnail: string;
-  readingTime: number;
-  viewCount: number;
-  createdAt: Date;
-  user: SeriesQueryUser;
-  project: { id: number; name: string };
-  postTags: Array<{ tag: { id: number; name: string } }>;
-};
-
-type SeriesQueryResult = {
-  id: number;
-  title: string;
-  description: string | null;
-  posts: SeriesQueryPost[];
-};
+import type { SeriesQueryResult } from '../model/types';
 
 export function parseSeriesId(rawId: string): number | null {
-  const seriesId = Number.parseInt(rawId, 10);
-  if (Number.isNaN(seriesId)) return null;
+  if (!/^\d+$/.test(rawId)) return null;
+
+  const seriesId = Number(rawId);
+  if (!Number.isSafeInteger(seriesId) || seriesId < 0) return null;
+
   return seriesId;
 }
 

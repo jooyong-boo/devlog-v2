@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { Skeleton } from '../Skeleton';
 
 describe('<Skeleton />', () => {
   it('기본 variant와 animation 클래스를 적용해야 한다', () => {
-    const { container } = render(<Skeleton data-testid="skeleton" />);
-    const skeleton = container.firstChild as HTMLElement;
+    render(<Skeleton data-testid="skeleton" />);
+    const skeleton = screen.getByTestId('skeleton') as HTMLElement;
 
     expect(skeleton.className).toContain('rounded');
     expect(skeleton.className).toContain('animate-pulse');
