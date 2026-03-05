@@ -75,7 +75,7 @@ describe('<Pagination />', () => {
       />
     );
 
-    expect(screen.getAllByText('...').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('...').length).toBe(2);
     expect(screen.getByRole('button', { name: '1' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '20' })).toBeInTheDocument();
   });
