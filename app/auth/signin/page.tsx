@@ -1,5 +1,5 @@
 import { Card } from '@/shared/ui/card';
-import { signIn } from '../../../auth';
+import { signIn } from '@/shared/lib/auth';
 
 function GoogleIcon() {
   return (

@@ -6,9 +6,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/shared/ui/button';
 import { Input } from '@/shared/ui/input';
 import { Select } from '@/shared/ui/select';
-import { createPost, updatePost } from '../api/actions';
-import { postFormSchema, type PostFormData } from '../model/schema';
-import { TiptapEditor } from './TiptapEditor';
+import { createPost, updatePost } from '@/features/post/create/api/actions';
+import {
+  postFormSchema,
+  type PostFormData,
+} from '@/features/post/create/model/schema';
+import { TiptapEditor } from '@/features/post/create/ui/TiptapEditor';
 
 interface PostCreateFormProps {
   projects: Array<{ id: number; name: string }>;

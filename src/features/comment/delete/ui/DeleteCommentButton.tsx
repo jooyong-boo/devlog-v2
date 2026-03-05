@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Button } from '@/shared/ui/button';
-import { deleteComment } from '../api/actions';
+import { deleteComment } from '@/features/comment/delete/api/actions';
 
 interface DeleteCommentButtonProps {
   commentId: number;

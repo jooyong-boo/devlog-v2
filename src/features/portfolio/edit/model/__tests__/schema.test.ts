@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { portfolioEditSchema } from '../schema';
+import { portfolioEditSchema } from '@/features/portfolio/edit/model/schema';
 
 describe('portfolioEditSchema', () => {
   it('유효한 데이터를 통과시켜야 한다', () => {

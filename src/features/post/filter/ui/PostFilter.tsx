@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useCallback } from 'react';
 import { Select } from '@/shared/ui/select';
-import { PostSortTabs } from './PostSortTabs';
+import { PostSortTabs } from '@/features/post/filter/ui/PostSortTabs';
 
 interface PostFilterProps {
   projects?: Array<{ id: number; name: string }>;

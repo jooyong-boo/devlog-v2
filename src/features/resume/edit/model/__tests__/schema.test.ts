@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { resumeEditSchema } from '../schema';
+import { resumeEditSchema } from '@/features/resume/edit/model/schema';
 
 describe('resumeEditSchema', () => {
   it('유효한 데이터를 통과시켜야 한다', () => {

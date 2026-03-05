@@ -2,6 +2,11 @@ import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { prisma } from '@/shared/lib/prisma';
 import { PostCard } from '@/entities/post/ui/PostCard';
+import {
+  buildSeriesMetadata,
+  normalizeSeriesWithPosts,
+  parseSeriesId,
+} from '@/entities/post/lib/series-page';
 
 interface SeriesDetailPageProps {
   params: Promise<{ id: string }>;
@@ -33,18 +38,7 @@ async function getSeriesWithPosts(id: number) {
 
   if (!series) return null;
 
-  return {
-    ...series,
-    posts: series.posts.map((post) => ({
-      ...post,
-      user: {
-        ...post.user,
-        nickname: post.user.nickname || post.user.name || 'Anonymous',
-        profile: post.user.profile || post.user.image || '',
-      },
-      tags: post.postTags.map((pt) => pt.tag),
-    })),
-  };
+  return normalizeSeriesWithPosts(series);
 }
 
 async function SeriesDetailContent({
@@ -53,9 +47,9 @@ async function SeriesDetailContent({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const seriesId = parseInt(id);
+  const seriesId = parseSeriesId(id);
 
-  if (isNaN(seriesId)) notFound();
+  if (seriesId == null) notFound();
 
   const series = await getSeriesWithPosts(seriesId);
 
@@ -107,18 +101,13 @@ export default function SeriesDetailPage({ params }: SeriesDetailPageProps) {
 
 export async function generateMetadata({ params }: SeriesDetailPageProps) {
   const { id } = await params;
-  const seriesId = parseInt(id);
+  const seriesId = parseSeriesId(id);
 
-  if (isNaN(seriesId)) return {};
+  if (seriesId == null) return {};
 
   const series = await prisma.series.findUnique({
     where: { id: seriesId },
   });
 
-  if (!series) return {};
-
-  return {
-    title: `${series.title} | Jooyong DevLog`,
-    description: series.description || `${series.title} 시리즈`,
-  };
+  return buildSeriesMetadata(series);
 }

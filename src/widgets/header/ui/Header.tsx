@@ -7,8 +7,8 @@ import { Github, Search } from 'lucide-react';
 import { cn } from '@/shared/lib/utils';
 import { siteConfig } from '@/shared/config/site';
 import { Button } from '@/shared/ui/button';
-import { UserDropdown } from './UserDropdown';
-import { ThemeToggle } from './ThemeToggle';
+import { UserDropdown } from '@/widgets/header/ui/UserDropdown';
+import { ThemeToggle } from '@/widgets/header/ui/ThemeToggle';
 
 const navLinks = [
   { href: '/', label: 'Home' },

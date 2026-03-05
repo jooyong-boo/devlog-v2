@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { PostCard } from '../PostCard';
+import { PostCard } from '@/entities/post/ui/PostCard';
 
 // Mock next/image
 vi.mock('next/image', () => ({

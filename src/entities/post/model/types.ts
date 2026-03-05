@@ -40,3 +40,31 @@ export interface PostListResult {
   total: number;
   totalPages: number;
 }
+
+export type SeriesQueryUser = {
+  id: string;
+  name: string | null;
+  nickname: string | null;
+  profile: string | null;
+  image: string | null;
+};
+
+export type SeriesQueryPost = {
+  id: string;
+  title: string;
+  content: string;
+  thumbnail: string;
+  readingTime: number;
+  viewCount: number;
+  createdAt: Date;
+  user: SeriesQueryUser;
+  project: { id: number; name: string };
+  postTags: Array<{ tag: { id: number; name: string } }>;
+};
+
+export type SeriesQueryResult = {
+  id: number;
+  title: string;
+  description: string | null;
+  posts: SeriesQueryPost[];
+};

@@ -1,7 +1,7 @@
 import { cache } from 'react';
 import { cacheTag, cacheLife } from 'next/cache';
 import { prisma } from '@/shared/lib/prisma';
-import type { PostListParams } from '../model/types';
+import type { PostListParams } from '@/entities/post/model/types';
 
 export async function getPublishedPosts(params: PostListParams) {
   'use cache';
