@@ -4,9 +4,12 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Textarea } from '@/shared/ui/textarea';
 import { Button } from '@/shared/ui/button';
-import { createComment } from '../api/actions';
+import { createComment } from '@/features/comment/create/api/actions';
 import { useSession } from 'next-auth/react';
-import { commentFormSchema, type CommentFormData } from '../model/schema';
+import {
+  commentFormSchema,
+  type CommentFormData,
+} from '@/features/comment/create/model/schema';
 
 interface CommentFormProps {
   postId: string;

@@ -97,7 +97,7 @@ vi.mock('@radix-ui/react-select', async () => {
   };
 });
 
-import { Select } from '../Select';
+import { Select } from '@/shared/ui/select/Select';
 
 const options = [
   { value: '', label: '전체' },

@@ -1,4 +1,4 @@
-import type { SeriesQueryResult } from '../model/types';
+import type { SeriesQueryResult } from '@/entities/post/model/types';
 
 export function parseSeriesId(rawId: string): number | null {
   if (!/^\d+$/.test(rawId)) return null;

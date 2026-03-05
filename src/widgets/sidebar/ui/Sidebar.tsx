@@ -4,8 +4,8 @@ import { Avatar } from '@/shared/ui/avatar';
 import { siteConfig } from '@/shared/config/site';
 import Link from 'next/link';
 import { prisma } from '@/shared/lib/prisma';
-import { NewsletterSignup } from './NewsletterSignup';
-import { WeeklyRankings } from './WeeklyRankings';
+import { NewsletterSignup } from '@/widgets/sidebar/ui/NewsletterSignup';
+import { WeeklyRankings } from '@/widgets/sidebar/ui/WeeklyRankings';
 
 async function getPopularTags() {
   const tags = await prisma.tag.findMany({

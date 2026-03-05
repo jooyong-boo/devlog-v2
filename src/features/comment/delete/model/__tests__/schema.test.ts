@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { deleteCommentSchema } from '../schema';
+import { deleteCommentSchema } from '@/features/comment/delete/model/schema';
 
 describe('deleteCommentSchema', () => {
   it('양의 정수 commentId를 통과시켜야 한다', () => {

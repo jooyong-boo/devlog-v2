@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { Skeleton } from '../Skeleton';
+import { Skeleton } from '@/shared/ui/skeleton/Skeleton';
 
 describe('<Skeleton />', () => {
   it('기본 variant와 animation 클래스를 적용해야 한다', () => {

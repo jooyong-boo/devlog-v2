@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { newsletterSchema } from '../schema';
+import { newsletterSchema } from '@/features/newsletter/model/schema';
 
 describe('newsletterSchema', () => {
   it('유효한 이메일을 통과시켜야 한다', () => {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { revalidateTag } from 'next/cache';
-import { auth } from '../../../../auth';
+import { auth } from '@/shared/lib/auth';
 import { prisma } from '@/shared/lib/prisma';
 
 export async function GET() {

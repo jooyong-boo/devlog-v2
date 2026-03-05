@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render } from '@testing-library/react';
-import { PostCardSkeleton } from '../PostCardSkeleton';
+import { PostCardSkeleton } from '@/entities/post/ui/PostCardSkeleton';
 
 describe('<PostCardSkeleton />', () => {
   it('카드 스켈레톤 레이아웃을 렌더링해야 한다', () => {

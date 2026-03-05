@@ -4,7 +4,7 @@ import { auth } from '@/shared/lib/auth';
 import { prisma } from '@/shared/lib/prisma';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { z } from 'zod';
-import { createPostServerSchema } from '../model/schema';
+import { createPostServerSchema } from '@/features/post/create/model/schema';
 
 export async function createPost(formData: FormData) {
   const session = await auth();

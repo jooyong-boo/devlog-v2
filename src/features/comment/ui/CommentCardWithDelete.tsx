@@ -2,7 +2,7 @@
 
 import type { ComponentProps } from 'react';
 import { CommentCard } from '@/entities/comment/ui/CommentCard';
-import { DeleteCommentButton } from '../delete/ui/DeleteCommentButton';
+import { DeleteCommentButton } from '@/features/comment/delete/ui/DeleteCommentButton';
 
 type CommentCardWithDeleteProps = Omit<
   ComponentProps<typeof CommentCard>,

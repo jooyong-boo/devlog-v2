@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { postFormSchema } from '../schema';
+import { postFormSchema } from '@/features/post/create/model/schema';
 
 describe('postFormSchema', () => {
   it('유효한 데이터를 통과시켜야 한다', () => {

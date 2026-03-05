@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { cn } from '../utils';
+import { cn } from '@/shared/lib/utils';
 
 describe('cn() 유틸리티', () => {
   it('단일 클래스 이름을 반환해야 한다', () => {

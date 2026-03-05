@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { commentFormSchema } from '../schema';
+import { commentFormSchema } from '@/features/comment/create/model/schema';
 
 describe('commentFormSchema', () => {
   it('유효한 댓글 내용을 통과시켜야 한다', () => {

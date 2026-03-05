@@ -6,7 +6,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { TiptapEditor } from '@/features/post/create/ui/TiptapEditor';
 import { Button } from '@/shared/ui/button';
 import { upsertResume } from '@/entities/resume/api/mutations';
-import { resumeEditSchema, type ResumeEditFormData } from '../model/schema';
+import {
+  resumeEditSchema,
+  type ResumeEditFormData,
+} from '@/features/resume/edit/model/schema';
 
 interface ResumeEditFormProps {
   initialContent: string;

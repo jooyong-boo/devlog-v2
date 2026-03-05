@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { formatDate, formatRelativeTime } from '../date';
+import { formatDate, formatRelativeTime } from '@/shared/lib/date';
 
 describe('formatDate()', () => {
   it('날짜를 YYYY.MM.DD 형식으로 포맷해야 한다', () => {

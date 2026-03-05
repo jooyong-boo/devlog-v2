@@ -36,7 +36,7 @@ describe('<Textarea />', () => {
     expect(textarea).toHaveAttribute('aria-invalid', 'true');
   });
 
-  it('숫자 width/height style을 반영해야 한다', () => {
+  it('className과 기본 border 클래스를 반영해야 한다', () => {
     render(<Textarea className="custom-textarea" />);
     const textarea = screen.getByRole('textbox');
 

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Pagination } from '../Pagination';
+import { Pagination } from '@/shared/ui/pagination/Pagination';
 
 describe('<Pagination />', () => {
   it('totalPages가 1 이하이면 렌더링하지 않아야 한다', () => {
