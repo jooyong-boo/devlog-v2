@@ -59,6 +59,7 @@ describe('<Pagination />', () => {
     fireEvent.click(screen.getByRole('button', { name: '다음' }));
     fireEvent.click(screen.getByRole('button', { name: '5' }));
 
+    expect(onPageChange).toHaveBeenCalledTimes(3);
     expect(onPageChange).toHaveBeenNthCalledWith(1, 2);
     expect(onPageChange).toHaveBeenNthCalledWith(2, 4);
     expect(onPageChange).toHaveBeenNthCalledWith(3, 5);
